@@ -349,3 +349,6 @@ footer p{color:#aebdc9;font-size:12px;line-height:1.6}
 .keyword-cluster-note p{margin:0 0 7px!important;font-size:13px}
 .keyword-cluster-note p:last-child{margin-bottom:0!important}
 .supporting-longtail-note{padding:13px 15px;background:#fbfaf7;border:1px solid var(--line);border-radius:11px}
+
+/* Language popover is hidden until the existing language button is clicked. */
+.navlinks{position:relative}.language-popover{position:absolute;right:0;top:48px;z-index:100;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:8px;min-width:190px;display:grid;gap:2px}.language-popover a{padding:8px 10px;border-radius:8px;color:var(--ink);font-size:13px;font-weight:700}.language-popover a:hover{background:var(--wash)}

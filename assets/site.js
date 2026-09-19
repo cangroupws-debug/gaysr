@@ -104,3 +104,22 @@ if(d.get("trip_type")==="Round Trip"){
 
   qsa("[data-wa]").forEach(a=>a.href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(directText)}`);
 })();
+
+
+// Language menu: added without changing the existing visual design.
+(function(){
+  const langs=[
+    ["English","/"],["Español","/es/"],["简体中文","/zh-cn/"],["한국어","/ko/"],["日本語","/ja/"],["Русский","/ru/"],["Italiano","/it/"],["Deutsch","/de/"],["Português","/pt/"],["繁體中文","/zh-tw/"],["Français","/fr/"],["ไทย","/th/"],["Bahasa Indonesia","/id/"],["Bahasa Melayu","/ms-my/"]
+  ];
+  const btn=document.querySelector('.lang'); if(!btn) return;
+  btn.addEventListener('click',function(e){
+    e.preventDefault(); e.stopPropagation();
+    let pop=document.querySelector('.language-popover');
+    if(pop){ pop.remove(); return; }
+    pop=document.createElement('div'); pop.className='language-popover';
+    const path=location.pathname.replace(/^\/(es|zh-cn|ko|ja|ru|it|de|pt|zh-tw|fr|th|id|ms-my)(?=\/|$)/,'') || '/';
+    langs.forEach(([name,base])=>{ const a=document.createElement('a'); a.textContent=name; a.href=base==='/'?path:(base.replace(/\/$/,'')+path); pop.appendChild(a); });
+    btn.parentElement.appendChild(pop);
+  });
+  document.addEventListener('click',()=>{ const p=document.querySelector('.language-popover'); if(p) p.remove(); });
+})();
