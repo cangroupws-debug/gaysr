@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Kayseri Airport to Cappadocia</title>
+  <desc id="desc">A clear Cappadocia mountain silhouette with a road and hot-air balloon on a navy background.</desc>
+  <rect width="256" height="256" rx="56" fill="#0d2b4b"/>
+  <!-- hot-air balloon: small, recognisable accent -->
+  <path d="M190 42c0 20-13 34-27 43-14-9-27-23-27-43 0-17 12-29 27-29s27 12 27 29Z" fill="#d39a33"/>
+  <path d="M163 85v16M154 101h18" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+  <!-- full mountain silhouette -->
+  <path d="M31 184 91 83l27 46 30-54 77 109H31Z" fill="#fff"/>
+  <!-- mountain shadow gives the two-peaked form clarity -->
+  <path d="m118 129 30-54 77 109h-67l-30-55Z" fill="#d9e5ef"/>
+  <!-- gold ridge line and road -->
+  <path d="m31 184 60-101 27 46 30-54" fill="none" stroke="#d39a33" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M31 205h194" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+  <path d="M128 205c-1-20 5-39 18-57" fill="none" stroke="#d39a33" stroke-width="8" stroke-linecap="round"/>
+</svg>
