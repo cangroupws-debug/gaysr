@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="de"><head>
 <meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>Flughafen Kayseri nach Kappadokien Transfer buchen</title><meta content="Buche Sammelshuttle oder Privattransfer vom Flughafen Kayseri nach Göreme, Ürgüp, Uçhisar, Avanos, Çavuşin oder Ortahisar." name="description"/>
@@ -28,7 +29,93 @@
 <header><div class="wrap nav">
 <a class="brand" href="/de/"><img alt="" height="46" src="../../assets/logo.svg" width="46"/><span><strong>Kayseri nach Kappadokien</strong><span>FLUGHAFENTRANSFER</span></span></a>
 <nav class="navlinks"><a href="/de/#routes">Routen</a><a href="/de/#prices">Preise</a><a href="/de/shared-shuttle-vs-private-transfer/">Vergleichen</a><a href="/de/faq/">FAQ</a><a href="/de/about/">Über uns</a><a href="/de/contact/">Kontakt</a><a class="nav-book" href="/de/booking/">Buchung</a><button class="lang">DE ▾</button></nav>
-<button aria-label="Menu" class="menu">☰</button></div></header><main><section class="section"><div class="wrap"><div class="full-booking"><div class="eyebrow">Buchung</div><h1 style="font-size:48px">Transfer buchen</h1><p class="lead">Wähle Route, Datum und Passagierzahl. Flug- und Hoteldaten können im nächsten Schritt ergänzt werden.</p><form class="booking-card" style="margin-top:20px"><h2>Transferanfrage</h2><div class="fields"><div class="field full"><label>REISEART</label><select><option>Einfache Fahrt</option><option>Hin und zurück</option></select></div><div class="field full"><label>VON</label><select><option>Kayseri Airport (ASR)</option><option>Göreme Hotel</option><option>Ürgüp Hotel</option><option>Uçhisar Hotel</option><option>Avanos Hotel</option><option>Çavuşin Hotel</option><option>Ortahisar Hotel</option></select></div><div class="field full"><label>NACH</label><select><option>Ziel auswählen</option><option>Göreme</option><option>Ürgüp</option><option>Uçhisar</option><option>Avanos</option><option>Çavuşin</option><option>Ortahisar</option><option>Kayseri Airport (ASR)</option></select></div><div class="field"><label>TRANSFERDATUM</label><input type="date"/></div><div class="field"><label>PASSAGIERE</label><input max="16" min="1" type="number" value="1"/></div><div class="field full"><label>TRANSFERART</label><select><option>Sammelshuttle</option><option>Privater Vito</option><option>Privater Sprinter</option></select></div></div><button class="primary" style="width:100%;margin-top:14px" type="submit">Buchung fortsetzen →</button><div class="form-note">Beim Absenden öffnet sich Ihre Buchungsanfrage in WhatsApp, bereit zum Versenden an unser Team.</div></form></div></div></section></main><footer><div class="wrap"><div class="footer-grid">
+<button aria-label="Menu" class="menu">☰</button></div></header><main><section class="section"><div class="wrap"><div class="full-booking">
+<div class="eyebrow">Buchungsanfrage</div><h1 style="font-size:48px">Transfer vom Flughafen Kayseri buchen</h1><p class="lead">Füllen Sie die Angaben aus. Beim Absenden wird die Anfrage per E-Mail an unser Team gesendet und WhatsApp öffnet sich mit derselben Buchungs-ID.</p>
+<div class="notice">Schritt 1 erfasst Transfer- und Kontaktdaten. Namen und Reisepassnummern werden in Schritt 2 abgefragt, da sie für die Reservierung und Meldung des Flughafentransfers erforderlich sind.</div>
+<div class="trust-strip" style="margin-top:20px">
+<div class="feature"><strong>24 Stunden kostenlos stornierbar</strong><span>Bis 24 Stunden vor dem Transfer kostenlos stornieren.</span></div>
+<div class="feature"><strong>Nur Barzahlung</strong><span>Bezahlung beim Fahrer in EUR, USD oder TRY. Keine Kartenzahlung.</span></div>
+<div class="feature"><strong>Flugverspätungen werden verfolgt</strong><span>Der korrekt angegebene Flug wird überwacht; für flugbedingte Wartezeit fällt keine Zusatzgebühr an.</span></div>
+</div><form class="booking-card" data-email-integration="resend" id="full-booking" style="margin-top:20px">
+<div class="fields">
+<div class="field full">
+<label>REISEART</label>
+<select id="trip-type" name="trip_type" required=""><option value="One Way">Einfache Fahrt</option><option value="Round Trip">Hin- und Rückfahrt</option></select>
+</div>
+<div class="field full">
+<label>TRANSFERART</label>
+<select name="service" required="">
+<option value="">Transferart wählen</option>
+<option value="shared">Sammelshuttle — €15 pro Person</option>
+<option value="vito">Privater Vito — €90 pro Strecke (bis 5 Personen)</option>
+<option value="sprinter">Privater Sprinter — €110 pro Strecke (bis 16 Personen)</option>
+</select>
+</div>
+<div class="field">
+<label>RICHTUNG</label>
+<select name="direction" required="">
+<option value="from_airport">Vom Flughafen Kayseri</option>
+<option value="to_airport">Zum Flughafen Kayseri</option>
+</select>
+</div>
+<div class="field">
+<label>ZIEL</label>
+<select name="destination" required="">
+<option value="">Ziel wählen</option>
+<option value="Göreme">Göreme</option>
+<option value="Ürgüp">Ürgüp</option>
+<option value="Uçhisar">Uçhisar</option>
+<option value="Avanos">Avanos</option>
+<option value="Çavuşin">Çavuşin</option>
+<option value="Ortahisar">Ortahisar</option>
+</select>
+</div>
+<div class="field">
+<label>TRANSFERDATUM</label>
+<input name="date" required="" type="date"/>
+</div>
+<div class="field">
+<label>FLUGNUMMER</label>
+<input name="flight" placeholder="z. B. TK2010" required=""/>
+</div><div class="field"><label>FLUGZEIT</label><input name="flight_time" placeholder="z. B. 20:40" required="" type="time"/></div>
+<div class="field full">
+<label>HOTEL / UNTERKUNFT</label>
+<input name="hotel" placeholder="Vollständiger Hotel- oder Unterkunftsname" required=""/>
+</div>
+<div class="field full" hidden="" id="return-fields">
+<div class="fields"><div class="field"><label>RÜCKFAHRTSDATUM</label><input name="return_date" type="date"/></div><div class="field"><label>RÜCKFLUGNUMMER</label><input name="return_flight" placeholder="z. B. TK2011"/></div></div>
+</div>
+<div class="field">
+<label>PASSAGIERE</label>
+<select id="passengers" name="passengers" required="">
+<option value="1">1</option><option value="2">2</option><option value="3">3</option>
+<option value="4">4</option><option value="5">5</option><option value="6">6</option>
+<option value="7">7</option><option value="8">8</option><option value="9">9</option>
+<option value="10">10</option><option value="11">11</option><option value="12">12</option>
+<option value="13">13</option><option value="14">14</option><option value="15">15</option>
+<option value="16">16</option>
+</select>
+</div><div class="field"><label>KONTAKT-WHATSAPP</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="Ländervorwahl + Nummer, z. B. 447957940844" required="" type="tel"/></div>
+<div class="field">
+<label>ZAHLUNG</label>
+<input aria-readonly="true" readonly="" value="Bar beim Fahrer — EUR / USD / TRY"/>
+</div>
+<div class="field full">
+<div class="notice">Die Zahlung erfolgt bar beim Fahrer. EUR, USD und TRY werden akzeptiert. Kartenzahlung ist nicht möglich. Kostenlose Stornierung bis 24 Stunden vor dem Transfer.</div>
+</div>
+</div>
+<button class="primary" id="continue-booking" style="width:100%;margin-top:14px" type="button">Weiter zu den Passagierdaten →</button>
+<div hidden="" id="passenger-step" style="margin-top:22px">
+<div class="notice"><strong>Passagierdaten</strong><br/>Reisepassdaten werden erst in diesem Schritt abgefragt, da sie für die Reservierung und Meldung des Flughafentransfers in Türkiye erforderlich sind.</div>
+<div id="passenger-fields"></div>
+<div class="field" style="margin-top:12px">
+<label>ANMERKUNGEN (OPTIONAL)</label>
+<textarea name="notes" placeholder="Hinweise zur Ankunft oder andere wichtige Angaben"></textarea>
+</div>
+<div aria-hidden="true" hidden=""><label>Website<input autocomplete="off" name="website" tabindex="-1"/></label></div><button class="primary" style="width:100%;margin-top:14px" type="submit">Buchungsanfrage per E-Mail &amp; WhatsApp senden →</button>
+</div>
+<div class="form-note">Die Buchung wird sicher per E-Mail an unser Team gesendet; anschließend öffnet sich WhatsApp mit derselben Buchungs-ID.</div>
+</form></div></div></section></main><footer><div class="wrap"><div class="footer-grid">
 <div><div class="footer-brand"><img alt="" height="48" src="../../assets/logo.svg" width="48"/><div><h3>Kayseri nach Kappadokien Flughafentransfer</h3><p>Sammelshuttle &amp; Privattransfer ab Flughafen Kayseri.</p></div></div><p>Ekwo Travel &amp; Outdoor Travel Agency<br/>TURSAB Nr. 7896</p></div>
 <div><h3>Routen</h3><a href="/de/kayseri-airport-to-goreme/">Göreme</a><a href="/de/kayseri-airport-to-urgup/">Ürgüp</a><a href="/de/kayseri-airport-to-uchisar/">Uçhisar</a><a href="/de/kayseri-airport-to-avanos/">Avanos</a><a href="/de/kayseri-airport-to-cavusin/">Çavuşin</a><a href="/de/kayseri-airport-to-ortahisar/">Ortahisar</a></div>
 <div><h3>Information</h3><a href="/de/about/">Über uns</a><a href="/de/faq/">FAQ</a><a href="/de/contact/">Kontakt</a><a href="/de/booking/">Buchung</a></div>

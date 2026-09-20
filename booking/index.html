@@ -5,8 +5,6 @@
 <title>Book Kayseri Airport to Cappadocia Transfer</title>
 <meta content="Book a Kayseri Airport transfer to Göreme, Ürgüp, Uçhisar, Avanos, Çavuşin or Ortahisar. Send your reservation request by WhatsApp." name="description"/>
 <link href="https://kayseriairporttocappadocia.com/booking/" rel="canonical"/><link href="https://kayseriairporttocappadocia.com/booking/" hreflang="en" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/es/booking/" hreflang="es" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/zh-cn/booking/" hreflang="zh-CN" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/ko/booking/" hreflang="ko" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/ja/booking/" hreflang="ja" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/ru/booking/" hreflang="ru" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/it/booking/" hreflang="it" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/de/booking/" hreflang="de" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/pt/booking/" hreflang="pt" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/zh-tw/booking/" hreflang="zh-TW" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/fr/booking/" hreflang="fr" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/th/booking/" hreflang="th" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/id/booking/" hreflang="id" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/ms-my/booking/" hreflang="ms-MY" rel="alternate"/><link href="https://kayseriairporttocappadocia.com/booking/" hreflang="x-default" rel="alternate"/>
-
-
 <meta content="Book Kayseri Airport to Cappadocia Transfer" property="og:title"/>
 <meta content="Book a Kayseri Airport transfer to Göreme, Ürgüp, Uçhisar, Avanos, Çavuşin or Ortahisar. Send your reservation request by WhatsApp." property="og:description"/>
 <meta content="https://kayseriairporttocappadocia.com/booking/" property="og:url"/><meta content="website" property="og:type"/>
@@ -22,13 +20,13 @@
 <button aria-label="Menu" class="menu">☰</button>
 </div></header>
 <main><section class="section"><div class="wrap"><div class="full-booking">
-<div class="eyebrow">Booking request</div><h1 style="font-size:48px">Book Your Kayseri Airport Transfer</h1><p class="lead">Complete the details below. When you submit the form, your booking request opens in WhatsApp ready to send to our team.</p>
-<div class="notice">Step 1 asks only for transfer details. Passenger names and passport numbers are requested in Step 2 because they are required for the reservation and airport transfer reporting process.</div>
+<div class="eyebrow">Booking request</div><h1 style="font-size:48px">Book Your Kayseri Airport Transfer</h1><p class="lead">Complete the details below. When you submit the form, the booking request is sent to our team by email and WhatsApp opens with the same booking ID.</p>
+<div class="notice">Step 1 asks for transfer and contact details. Passenger names and passport numbers are requested in Step 2 because they are required for the reservation and airport transfer reporting process.</div>
 <div class="trust-strip" style="margin-top:20px">
 <div class="feature"><strong>24-hour free cancellation</strong><span>Cancel free of charge up to 24 hours before the transfer.</span></div>
 <div class="feature"><strong>Cash payment only</strong><span>Pay the driver in EUR, USD or TRY. No card payment.</span></div>
 <div class="feature"><strong>Flight delay tracking</strong><span>Correct flight code entered in the booking is monitored at no extra delay waiting charge.</span></div>
-</div><form class="booking-card" data-email-integration="pending" id="full-booking" style="margin-top:20px">
+</div><form class="booking-card" data-email-integration="resend" id="full-booking" style="margin-top:20px">
 <div class="fields">
 <div class="field full">
 <label>TRIP TYPE</label>
@@ -38,16 +36,16 @@
 <label>TRANSFER OPTION</label>
 <select name="service" required="">
 <option value="">Select transfer option</option>
-<option>Shared Shuttle — €15 per person</option>
-<option>Private Vito — €90 per way (up to 5 passengers)</option>
-<option>Private Sprinter — €110 per way (up to 16 passengers)</option>
+<option value="shared">Shared Shuttle — €15 per person</option>
+<option value="vito">Private Vito — €90 per way (up to 5 passengers)</option>
+<option value="sprinter">Private Sprinter — €110 per way (up to 16 passengers)</option>
 </select>
 </div>
 <div class="field">
 <label>DIRECTION</label>
 <select name="direction" required="">
-<option>From Kayseri Airport</option>
-<option>To Kayseri Airport</option>
+<option value="from_airport">From Kayseri Airport</option>
+<option value="to_airport">To Kayseri Airport</option>
 </select>
 </div>
 <div class="field">
@@ -69,7 +67,7 @@
 <div class="field">
 <label>FLIGHT CODE</label>
 <input name="flight" placeholder="e.g. TK2010" required=""/>
-</div>
+</div><div class="field"><label>FLIGHT TIME</label><input name="flight_time" placeholder="e.g. 20:40" required="" type="time"/></div>
 <div class="field full">
 <label>HOTEL / ACCOMMODATION</label>
 <input name="hotel" placeholder="Full hotel or property name" required=""/>
@@ -87,7 +85,7 @@
 <option value="13">13</option><option value="14">14</option><option value="15">15</option>
 <option value="16">16</option>
 </select>
-</div>
+</div><div class="field"><label>CONTACT WHATSAPP</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="Country code + number, e.g. 447957940844" required="" type="tel"/></div>
 <div class="field">
 <label>PAYMENT</label>
 <input aria-readonly="true" readonly="" value="Cash to driver — EUR / USD / TRY"/>
@@ -104,9 +102,9 @@
 <label>NOTES (OPTIONAL)</label>
 <textarea name="notes" placeholder="Arrival notes or another important detail"></textarea>
 </div>
-<button class="primary" style="width:100%;margin-top:14px" type="submit">Send Booking Request by WhatsApp →</button>
+<div aria-hidden="true" hidden=""><label>Website<input autocomplete="off" name="website" tabindex="-1"/></label></div><button class="primary" style="width:100%;margin-top:14px" type="submit">Send Booking Request by Email &amp; WhatsApp →</button>
 </div>
-<div class="form-note">WhatsApp: +90 545 932 00 50</div>
+<div class="form-note">The booking is emailed securely to our team, then WhatsApp opens with the same booking ID.</div>
 </form></div></div></section></main>
 <footer><div class="wrap">
 <div class="footer-grid">

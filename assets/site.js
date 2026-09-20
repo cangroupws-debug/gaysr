@@ -62,12 +62,36 @@
   const full=qs("#full-booking");
   if(full){
     const params=new URLSearchParams(location.search);
-    ["trip_type","service","direction","destination","date","passengers"].forEach(k=>{
-      const el=full.elements[k];
-      if(el && params.get(k)) el.value=params.get(k);
-    });
     const passengerCount=qs("#passengers",full);
     const passengerWrap=qs("#passenger-fields",full);
+    const tripType=qs("#trip-type",full);
+    const returnFields=qs("#return-fields",full);
+    const submitBtn=full.querySelector('button[type="submit"]');
+    const submitLabel=submitBtn ? submitBtn.textContent : "";
+
+    function setSelectByTextOrValue(el,value){
+      if(!el || !value) return;
+      const decoded=String(value).replace(/\+/g," ").trim().toLowerCase();
+      const exact=[...el.options].find(o=>String(o.value).toLowerCase()===decoded || o.textContent.trim().toLowerCase()===decoded);
+      if(exact){ el.value=exact.value; return; }
+      if(el.name==="service"){
+        if(decoded.includes("15") || decoded.includes("shared") || decoded.includes("shuttle")) el.value="shared";
+        else if(decoded.includes("vito") || decoded.includes("90")) el.value="vito";
+        else if(decoded.includes("sprinter") || decoded.includes("110")) el.value="sprinter";
+      } else if(el.name==="direction"){
+        if(decoded.includes("to kayseri")) el.value="to_airport";
+        else if(decoded.includes("from kayseri")) el.value="from_airport";
+      } else if(el.name==="trip_type"){
+        const roundWords=["round","vuelta","retour","rück","ritorno","regresso","туда","往返","왕복","ไป-กลับ","pulang","balik"];
+        el.value=roundWords.some(w=>decoded.includes(w)) ? "Round Trip" : "One Way";
+      }
+    }
+    ["trip_type","service","direction","destination","date","passengers"].forEach(k=>{
+      const el=full.elements[k], value=params.get(k);
+      if(!el || !value) return;
+      if(el.tagName==="SELECT") setSelectByTextOrValue(el,value); else el.value=value;
+    });
+
     function renderPassengers(){
       let n=Math.max(1,Math.min(16,parseInt(passengerCount.value||"1",10)));
       passengerWrap.innerHTML="";
@@ -76,8 +100,8 @@
           <div class="passenger-block">
             <h3>${c.passenger} ${i}</h3>
             <div class="fields">
-              <div class="field"><label>${c.fullName}</label><input name="passenger_name_${i}" required></div>
-              <div class="field"><label>${c.passportLabel}</label><input name="passport_${i}" required></div>
+              <div class="field"><label>${c.fullName}</label><input name="passenger_name_${i}" maxlength="100" autocomplete="name" required></div>
+              <div class="field"><label>${c.passportLabel}</label><input name="passport_${i}" maxlength="50" autocomplete="off" required></div>
             </div>
           </div>`);
       }
@@ -87,10 +111,8 @@
       renderPassengers();
     }
 
-    const tripType=qs("#trip-type",full);
-    const returnFields=qs("#return-fields",full);
     function syncTripType(){
-      const round=tripType && (tripType.value==="Round Trip" || tripType.value==="Ida y vuelta" || tripType.value==="往返");
+      const round=tripType && tripType.value==="Round Trip";
       if(returnFields) returnFields.hidden=!round;
       ["return_date","return_flight"].forEach(name=>{ const el=full.elements[name]; if(el) el.required=!!round; });
     }
@@ -100,10 +122,17 @@
     const passengerStep=qs("#passenger-step");
     if(continueBtn && passengerStep){
       continueBtn.addEventListener("click",()=>{
-        const requiredBefore=["trip_type","service","direction","destination","date","flight","hotel","passengers"];
+        const requiredBefore=["trip_type","service","direction","destination","date","flight","flight_time","hotel","passengers","contact_whatsapp"];
         for(const name of requiredBefore){
           const el=full.elements[name];
           if(el && !el.checkValidity()){ el.reportValidity(); return; }
+        }
+        const pax=parseInt(full.elements.passengers.value||"1",10);
+        if(full.elements.service.value==="vito" && pax>5){
+          full.elements.passengers.setCustomValidity("Private Vito is available for up to 5 passengers.");
+          full.elements.passengers.reportValidity();
+          full.elements.passengers.setCustomValidity("");
+          return;
         }
         passengerStep.hidden=false;
         continueBtn.hidden=true;
@@ -111,30 +140,63 @@
       });
     }
 
-    full.addEventListener("submit",e=>{
+    function bookingPayload(){
+      const d=new FormData(full);
+      const count=Math.max(1,Math.min(16,parseInt(d.get("passengers")||"1",10)));
+      const passengers=[];
+      for(let i=1;i<=count;i++) passengers.push({name:d.get("passenger_name_"+i)||"",passport:d.get("passport_"+i)||""});
+      return {
+        language:locale,
+        tripType:d.get("trip_type")==="Round Trip" ? "round_trip" : "one_way",
+        service:d.get("service"),
+        direction:d.get("direction"),
+        destination:d.get("destination"),
+        date:d.get("date"),
+        flight:d.get("flight"),
+        flightTime:d.get("flight_time"),
+        returnDate:d.get("return_date")||"",
+        returnFlight:d.get("return_flight")||"",
+        hotel:d.get("hotel"),
+        passengerCount:count,
+        contactWhatsApp:d.get("contact_whatsapp"),
+        notes:d.get("notes")||"",
+        passengers,
+        website:d.get("website")||""
+      };
+    }
+
+    full.addEventListener("submit",async e=>{
       e.preventDefault();
       if(!full.reportValidity()) return;
-      const d=new FormData(full);
-      let text=`${c.booking}\n\n`;
-      text+=`${c.trip}: ${d.get("trip_type")}\n`;
-      text+=`${c.service}: ${d.get("service")}\n`;
-      text+=`${c.direction}: ${d.get("direction")}\n`;
-      text+=`${c.route}: Kayseri Airport (ASR) ↔ ${d.get("destination")}\n`;
-      text+=`${c.date}: ${d.get("date")}\n`;
-      text+=`${c.flight}: ${d.get("flight")}\n`;
-      if(d.get("trip_type")==="Round Trip"){
-        text+=`${c.returnDate}: ${d.get("return_date")}\n`;
-        text+=`${c.returnFlight}: ${d.get("return_flight")}\n`;
+      const payload=bookingPayload();
+      if(payload.service==="vito" && payload.passengerCount>5){
+        full.elements.passengers.setCustomValidity("Private Vito is available for up to 5 passengers.");
+        full.elements.passengers.reportValidity();
+        full.elements.passengers.setCustomValidity("");
+        return;
       }
-      text+=`${c.hotel}: ${d.get("hotel")}\n`;
-      text+=`${c.passengers}: ${d.get("passengers")}\n`;
-      text+=`${c.payment}: ${c.cash}\n\n`;
-      for(let i=1;i<=parseInt(d.get("passengers"),10);i++){
-        text+=`${c.passenger} ${i}\n${c.name}: ${d.get("passenger_name_"+i)}\n${c.passport}: ${d.get("passport_"+i)}\n\n`;
+      if(submitBtn){ submitBtn.disabled=true; submitBtn.dataset.originalLabel=submitLabel; submitBtn.textContent=submitLabel.replace(/\s*[→›]\s*$/,'')+"…"; }
+      try{
+        const response=await fetch("/api/booking",{
+          method:"POST",
+          headers:{"Content-Type":"application/json","Accept":"application/json"},
+          body:JSON.stringify(payload)
+        });
+        const result=await response.json().catch(()=>({}));
+        if(!result.whatsappMessage) throw new Error(result.error||"Booking request could not be created.");
+        if(!response.ok) alert(result.message||"The email could not be delivered. WhatsApp will open so you can still send the booking request.");
+        location.href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(result.whatsappMessage)}`;
+      }catch(err){
+        alert(err && err.message ? err.message : "Booking request could not be sent. Please try again.");
+      }finally{
+        if(submitBtn){ submitBtn.disabled=false; submitBtn.textContent=submitLabel; }
       }
-      if(d.get("notes")) text+=`${c.notes}: ${d.get("notes")}\n\n`;
-      text+=c.confirm;
-      location.href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+    });
+
+    // When the customer returns from WhatsApp with the browser Back button,
+    // the next submit always creates a new server-side KTC-MMDD-XXXX ID.
+    window.addEventListener("pageshow",()=>{
+      if(submitBtn){ submitBtn.disabled=false; submitBtn.textContent=submitLabel; }
     });
   }
 

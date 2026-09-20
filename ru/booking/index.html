@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru"><head>
 <meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>Забронировать трансфер Кайсери — Каппадокия</title><meta content="Забронируйте общий шаттл или частный трансфер из аэропорта Кайсери в Гёреме, Ургюп, Учхисар, Аванос, Чавушин или Ортахисар." name="description"/>
@@ -28,7 +29,93 @@
 <header><div class="wrap nav">
 <a class="brand" href="/ru/"><img alt="" height="46" src="../../assets/logo.svg" width="46"/><span><strong>Кайсери — Каппадокия</strong><span>ТРАНСФЕР ИЗ АЭРОПОРТА</span></span></a>
 <nav class="navlinks"><a href="/ru/#routes">Маршруты</a><a href="/ru/#prices">Цены</a><a href="/ru/shared-shuttle-vs-private-transfer/">Сравнить</a><a href="/ru/faq/">FAQ</a><a href="/ru/about/">О нас</a><a href="/ru/contact/">Контакты</a><a class="nav-book" href="/ru/booking/">Бронирование</a><button class="lang">RU ▾</button></nav>
-<button aria-label="Menu" class="menu">☰</button></div></header><main><section class="section"><div class="wrap"><div class="full-booking"><div class="eyebrow">Бронирование</div><h1 style="font-size:48px">Забронируйте трансфер</h1><p class="lead">Выберите маршрут, дату и число пассажиров. Данные рейса и отеля можно добавить на следующем шаге.</p><form class="booking-card" style="margin-top:20px"><h2>Заявка на трансфер</h2><div class="fields"><div class="field full"><label>ТИП ПОЕЗДКИ</label><select><option>В одну сторону</option><option>Туда и обратно</option></select></div><div class="field full"><label>ОТКУДА</label><select><option>Kayseri Airport (ASR)</option><option>Göreme отель</option><option>Ürgüp отель</option><option>Uçhisar отель</option><option>Avanos отель</option><option>Çavuşin отель</option><option>Ortahisar отель</option></select></div><div class="field full"><label>КУДА</label><select><option>Выберите направление</option><option>Göreme</option><option>Ürgüp</option><option>Uçhisar</option><option>Avanos</option><option>Çavuşin</option><option>Ortahisar</option><option>Kayseri Airport (ASR)</option></select></div><div class="field"><label>ДАТА ТРАНСФЕРА</label><input type="date"/></div><div class="field"><label>ПАССАЖИРЫ</label><input max="16" мин="1" type="number" value="1"/></div><div class="field full"><label>ТИП ТРАНСФЕРА</label><select><option>Общий шаттл</option><option>Частный Vito</option><option>Частный Sprinter</option></select></div></div><button class="primary" style="width:100%;margin-top:14px" type="submit">Продолжить бронирование →</button><div class="form-note">После отправки формы заявка откроется в WhatsApp и будет готова к отправке нашей команде.</div></form></div></div></section></main><footer><div class="wrap"><div class="footer-grid">
+<button aria-label="Menu" class="menu">☰</button></div></header><main><section class="section"><div class="wrap"><div class="full-booking">
+<div class="eyebrow">Заявка на бронирование</div><h1 style="font-size:48px">Забронировать трансфер из аэропорта Кайсери</h1><p class="lead">Заполните данные ниже. После отправки заявка уйдёт нашей команде по электронной почте, а WhatsApp откроется с тем же ID бронирования.</p>
+<div class="notice">На шаге 1 указываются данные трансфера и контакта. Имена пассажиров и номера паспортов запрашиваются на шаге 2, так как они необходимы для бронирования и оформления аэропортового трансфера.</div>
+<div class="trust-strip" style="margin-top:20px">
+<div class="feature"><strong>Бесплатная отмена за 24 часа</strong><span>Отмена без оплаты не позднее чем за 24 часа до трансфера.</span></div>
+<div class="feature"><strong>Только наличная оплата</strong><span>Оплата водителю в EUR, USD или TRY. Карты не принимаются.</span></div>
+<div class="feature"><strong>Отслеживание задержки рейса</strong><span>Правильно указанный рейс отслеживается; дополнительная плата за ожидание из-за задержки рейса не взимается.</span></div>
+</div><form class="booking-card" data-email-integration="resend" id="full-booking" style="margin-top:20px">
+<div class="fields">
+<div class="field full">
+<label>ТИП ПОЕЗДКИ</label>
+<select id="trip-type" name="trip_type" required=""><option value="One Way">В одну сторону</option><option value="Round Trip">Туда и обратно</option></select>
+</div>
+<div class="field full">
+<label>ТИП ТРАНСФЕРА</label>
+<select name="service" required="">
+<option value="">Выберите тип трансфера</option>
+<option value="shared">Общий шаттл — €15 с человека</option>
+<option value="vito">Частный Vito — €90 в одну сторону (до 5 пассажиров)</option>
+<option value="sprinter">Частный Sprinter — €110 в одну сторону (до 16 пассажиров)</option>
+</select>
+</div>
+<div class="field">
+<label>НАПРАВЛЕНИЕ</label>
+<select name="direction" required="">
+<option value="from_airport">Из аэропорта Кайсери</option>
+<option value="to_airport">В аэропорт Кайсери</option>
+</select>
+</div>
+<div class="field">
+<label>НАПРАВЛЕНИЕ В КАППАДОКИИ</label>
+<select name="destination" required="">
+<option value="">Выберите пункт назначения</option>
+<option value="Göreme">Göreme</option>
+<option value="Ürgüp">Ürgüp</option>
+<option value="Uçhisar">Uçhisar</option>
+<option value="Avanos">Avanos</option>
+<option value="Çavuşin">Çavuşin</option>
+<option value="Ortahisar">Ortahisar</option>
+</select>
+</div>
+<div class="field">
+<label>ДАТА ТРАНСФЕРА</label>
+<input name="date" required="" type="date"/>
+</div>
+<div class="field">
+<label>НОМЕР РЕЙСА</label>
+<input name="flight" placeholder="напр. TK2010" required=""/>
+</div><div class="field"><label>ВРЕМЯ РЕЙСА</label><input name="flight_time" placeholder="напр. 20:40" required="" type="time"/></div>
+<div class="field full">
+<label>ОТЕЛЬ / РАЗМЕЩЕНИЕ</label>
+<input name="hotel" placeholder="Полное название отеля или объекта размещения" required=""/>
+</div>
+<div class="field full" hidden="" id="return-fields">
+<div class="fields"><div class="field"><label>ДАТА ОБРАТНОЙ ПОЕЗДКИ</label><input name="return_date" type="date"/></div><div class="field"><label>НОМЕР ОБРАТНОГО РЕЙСА</label><input name="return_flight" placeholder="напр. TK2011"/></div></div>
+</div>
+<div class="field">
+<label>ПАССАЖИРЫ</label>
+<select id="passengers" name="passengers" required="">
+<option value="1">1</option><option value="2">2</option><option value="3">3</option>
+<option value="4">4</option><option value="5">5</option><option value="6">6</option>
+<option value="7">7</option><option value="8">8</option><option value="9">9</option>
+<option value="10">10</option><option value="11">11</option><option value="12">12</option>
+<option value="13">13</option><option value="14">14</option><option value="15">15</option>
+<option value="16">16</option>
+</select>
+</div><div class="field"><label>WHATSAPP ДЛЯ СВЯЗИ</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="Код страны + номер, напр. 447957940844" required="" type="tel"/></div>
+<div class="field">
+<label>ОПЛАТА</label>
+<input aria-readonly="true" readonly="" value="Наличными водителю — EUR / USD / TRY"/>
+</div>
+<div class="field full">
+<div class="notice">Оплата производится наличными водителю. Принимаются EUR, USD и TRY. Оплата картой недоступна. Бесплатная отмена не позднее чем за 24 часа до трансфера.</div>
+</div>
+</div>
+<button class="primary" id="continue-booking" style="width:100%;margin-top:14px" type="button">Перейти к данным пассажиров →</button>
+<div hidden="" id="passenger-step" style="margin-top:22px">
+<div class="notice"><strong>Данные пассажиров</strong><br/>Паспортные данные запрашиваются только на этом этапе, так как они необходимы для бронирования и оформления аэропортового трансфера в Türkiye.</div>
+<div id="passenger-fields"></div>
+<div class="field" style="margin-top:12px">
+<label>ПРИМЕЧАНИЯ (НЕОБЯЗАТЕЛЬНО)</label>
+<textarea name="notes" placeholder="Информация о прибытии или другая важная деталь"></textarea>
+</div>
+<div aria-hidden="true" hidden=""><label>Website<input autocomplete="off" name="website" tabindex="-1"/></label></div><button class="primary" style="width:100%;margin-top:14px" type="submit">Отправить заявку по E-mail и WhatsApp →</button>
+</div>
+<div class="form-note">Заявка безопасно отправляется нашей команде по электронной почте, затем WhatsApp открывается с тем же ID бронирования.</div>
+</form></div></div></section></main><footer><div class="wrap"><div class="footer-grid">
 <div><div class="footer-brand"><img alt="" height="48" src="../../assets/logo.svg" width="48"/><div><h3>Кайсери — Каппадокия: трансфер из аэропорта</h3><p>Общий шаттл и частный трансфер из аэропорта Кайсери.</p></div></div><p>Ekwo Travel &amp; Outdoor Travel Agency<br/>TURSAB No: 7896</p></div>
 <div><h3>Маршруты</h3><a href="/ru/kayseri-airport-to-goreme/">Göreme</a><a href="/ru/kayseri-airport-to-urgup/">Ürgüp</a><a href="/ru/kayseri-airport-to-uchisar/">Uçhisar</a><a href="/ru/kayseri-airport-to-avanos/">Avanos</a><a href="/ru/kayseri-airport-to-cavusin/">Çavuşin</a><a href="/ru/kayseri-airport-to-ortahisar/">Ortahisar</a></div>
 <div><h3>Информация</h3><a href="/ru/about/">О нас</a><a href="/ru/faq/">FAQ</a><a href="/ru/contact/">Контакты</a><a href="/ru/booking/">Бронирование</a></div>

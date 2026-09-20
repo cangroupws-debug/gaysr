@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="id"><head>
 <meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>Pesan Transfer Bandara Kayseri ke Cappadocia</title><meta content="Pesan shuttle bersama atau transfer pribadi dari Bandara Kayseri ke Göreme, Ürgüp, Uçhisar, Avanos, Çavuşin, atau Ortahisar." name="description"/>
@@ -28,7 +29,93 @@
 <header><div class="wrap nav">
 <a class="brand" href="/id/"><img alt="" height="46" src="../../assets/logo.svg" width="46"/><span><strong>Kayseri ke Cappadocia</strong><span>TRANSFER BANDARA</span></span></a>
 <nav class="navlinks"><a href="/id/#routes">Rute</a><a href="/id/#prices">Harga</a><a href="/id/shared-shuttle-vs-private-transfer/">Bandingkan</a><a href="/id/faq/">FAQ</a><a href="/id/about/">Tentang</a><a href="/id/contact/">Kontak</a><a class="nav-book" href="/id/booking/">Pemesanan</a><button class="lang">ID ▾</button></nav>
-<button aria-label="Menu" class="menu">☰</button></div></header><main><section class="section"><div class="wrap"><div class="full-booking"><div class="eyebrow">Pemesanan</div><h1 style="font-size:48px">Pesan Transfer Anda</h1><p class="lead">Pilih rute, tanggal, dan jumlah penumpang. Informasi penerbangan dan hotel dapat ditambahkan pada langkah berikutnya.</p><form class="booking-card" style="margin-top:20px"><h2>Permintaan transfer</h2><div class="fields"><div class="field full"><label>JENIS PERJALANAN</label><select><option>Sekali jalan</option><option>Pulang pergi</option></select></div><div class="field full"><label>DARI</label><select><option>Bandara Kayseri (ASR)</option><option>Hotel di Göreme</option><option>Hotel di Ürgüp</option><option>Hotel di Uçhisar</option><option>Hotel di Avanos</option><option>Hotel di Çavuşin</option><option>Hotel di Ortahisar</option></select></div><div class="field full"><label>KE</label><select><option>Pilih tujuan</option><option>Göreme</option><option>Ürgüp</option><option>Uçhisar</option><option>Avanos</option><option>Çavuşin</option><option>Ortahisar</option><option>Bandara Kayseri (ASR)</option></select></div><div class="field"><label>TANGGAL TRANSFER</label><input type="date"/></div><div class="field"><label>PENUMPANG</label><input max="16" min="1" type="number" value="1"/></div><div class="field full"><label>JENIS TRANSFER</label><select><option>Shuttle Bersama</option><option>Vito Pribadi</option><option>Sprinter Pribadi</option></select></div></div><button class="primary" style="width:100%;margin-top:14px" type="submit">Lanjutkan pemesanan →</button><div class="form-note">Pengiriman email akan dihubungkan nanti. Saat ini formulir ini hanya menunjukkan alur pemesanan.</div></form></div></div></section></main><footer><div class="wrap"><div class="footer-grid">
+<button aria-label="Menu" class="menu">☰</button></div></header><main><section class="section"><div class="wrap"><div class="full-booking">
+<div class="eyebrow">Permintaan booking</div><h1 style="font-size:48px">Pesan Transfer Bandara Kayseri</h1><p class="lead">Lengkapi data di bawah. Saat dikirim, permintaan booking akan dikirim melalui email ke tim kami dan WhatsApp akan terbuka dengan ID booking yang sama.</p>
+<div class="notice">Langkah 1 meminta detail transfer dan kontak. Nama penumpang dan nomor paspor diminta pada Langkah 2 karena diperlukan untuk reservasi dan pelaporan transfer bandara.</div>
+<div class="trust-strip" style="margin-top:20px">
+<div class="feature"><strong>Pembatalan gratis hingga 24 jam</strong><span>Batalkan tanpa biaya hingga 24 jam sebelum transfer.</span></div>
+<div class="feature"><strong>Pembayaran tunai saja</strong><span>Bayar pengemudi dalam EUR, USD, atau TRY. Kartu tidak diterima.</span></div>
+<div class="feature"><strong>Pelacakan keterlambatan penerbangan</strong><span>Penerbangan yang dimasukkan dengan benar akan dipantau tanpa biaya tunggu tambahan akibat keterlambatan penerbangan.</span></div>
+</div><form class="booking-card" data-email-integration="resend" id="full-booking" style="margin-top:20px">
+<div class="fields">
+<div class="field full">
+<label>JENIS PERJALANAN</label>
+<select id="trip-type" name="trip_type" required=""><option value="One Way">Sekali jalan</option><option value="Round Trip">Pulang pergi</option></select>
+</div>
+<div class="field full">
+<label>JENIS TRANSFER</label>
+<select name="service" required="">
+<option value="">Pilih jenis transfer</option>
+<option value="shared">Shuttle bersama — €15 per orang</option>
+<option value="vito">Vito privat — €90 sekali jalan (maks. 5 penumpang)</option>
+<option value="sprinter">Sprinter privat — €110 sekali jalan (maks. 16 penumpang)</option>
+</select>
+</div>
+<div class="field">
+<label>ARAH PERJALANAN</label>
+<select name="direction" required="">
+<option value="from_airport">Dari Bandara Kayseri</option>
+<option value="to_airport">Ke Bandara Kayseri</option>
+</select>
+</div>
+<div class="field">
+<label>TUJUAN</label>
+<select name="destination" required="">
+<option value="">Pilih tujuan</option>
+<option value="Göreme">Göreme</option>
+<option value="Ürgüp">Ürgüp</option>
+<option value="Uçhisar">Uçhisar</option>
+<option value="Avanos">Avanos</option>
+<option value="Çavuşin">Çavuşin</option>
+<option value="Ortahisar">Ortahisar</option>
+</select>
+</div>
+<div class="field">
+<label>TANGGAL TRANSFER</label>
+<input name="date" required="" type="date"/>
+</div>
+<div class="field">
+<label>NOMOR PENERBANGAN</label>
+<input name="flight" placeholder="mis. TK2010" required=""/>
+</div><div class="field"><label>WAKTU PENERBANGAN</label><input name="flight_time" placeholder="mis. 20:40" required="" type="time"/></div>
+<div class="field full">
+<label>HOTEL / AKOMODASI</label>
+<input name="hotel" placeholder="Nama lengkap hotel atau akomodasi" required=""/>
+</div>
+<div class="field full" hidden="" id="return-fields">
+<div class="fields"><div class="field"><label>TANGGAL PULANG</label><input name="return_date" type="date"/></div><div class="field"><label>NOMOR PENERBANGAN PULANG</label><input name="return_flight" placeholder="mis. TK2011"/></div></div>
+</div>
+<div class="field">
+<label>PENUMPANG</label>
+<select id="passengers" name="passengers" required="">
+<option value="1">1</option><option value="2">2</option><option value="3">3</option>
+<option value="4">4</option><option value="5">5</option><option value="6">6</option>
+<option value="7">7</option><option value="8">8</option><option value="9">9</option>
+<option value="10">10</option><option value="11">11</option><option value="12">12</option>
+<option value="13">13</option><option value="14">14</option><option value="15">15</option>
+<option value="16">16</option>
+</select>
+</div><div class="field"><label>WHATSAPP KONTAK</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="Kode negara + nomor, mis. 447957940844" required="" type="tel"/></div>
+<div class="field">
+<label>PEMBAYARAN</label>
+<input aria-readonly="true" readonly="" value="Tunai kepada pengemudi — EUR / USD / TRY"/>
+</div>
+<div class="field full">
+<div class="notice">Pembayaran dilakukan tunai kepada pengemudi. EUR, USD, dan TRY diterima. Kartu tidak tersedia. Pembatalan gratis hingga 24 jam sebelum transfer.</div>
+</div>
+</div>
+<button class="primary" id="continue-booking" style="width:100%;margin-top:14px" type="button">Lanjut ke data penumpang →</button>
+<div hidden="" id="passenger-step" style="margin-top:22px">
+<div class="notice"><strong>Data penumpang</strong><br/>Informasi paspor hanya diminta pada tahap ini karena diperlukan untuk reservasi dan pelaporan transfer bandara di Türkiye.</div>
+<div id="passenger-fields"></div>
+<div class="field" style="margin-top:12px">
+<label>CATATAN (OPSIONAL)</label>
+<textarea name="notes" placeholder="Catatan kedatangan atau detail penting lain"></textarea>
+</div>
+<div aria-hidden="true" hidden=""><label>Website<input autocomplete="off" name="website" tabindex="-1"/></label></div><button class="primary" style="width:100%;margin-top:14px" type="submit">Kirim permintaan melalui Email &amp; WhatsApp →</button>
+</div>
+<div class="form-note">Booking dikirim dengan aman melalui email ke tim kami, lalu WhatsApp terbuka dengan ID booking yang sama.</div>
+</form></div></div></section></main><footer><div class="wrap"><div class="footer-grid">
 <div><div class="footer-brand"><img alt="" height="48" src="../../assets/logo.svg" width="48"/><div><h3>Kayseri ke Cappadocia Transfer Bandara</h3><p>Shuttle bersama dan transfer pribadi dari Bandara Kayseri.</p></div></div><p>Ekwo Travel &amp; Outdoor Travel Agency<br/>TURSAB No: 7896</p></div>
 <div><h3>Rute</h3><a href="/id/kayseri-airport-to-goreme/">Göreme</a><a href="/id/kayseri-airport-to-urgup/">Ürgüp</a><a href="/id/kayseri-airport-to-uchisar/">Uçhisar</a><a href="/id/kayseri-airport-to-avanos/">Avanos</a><a href="/id/kayseri-airport-to-cavusin/">Çavuşin</a><a href="/id/kayseri-airport-to-ortahisar/">Ortahisar</a></div>
 <div><h3>Informasi</h3><a href="/id/about/">Tentang</a><a href="/id/faq/">FAQ</a><a href="/id/contact/">Kontak</a><a href="/id/booking/">Pemesanan</a></div>

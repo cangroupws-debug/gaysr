@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW"><head>
 <meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>預訂開塞利機場至卡帕多奇亞接送</title><meta content="預訂從開塞利機場前往格雷梅、于爾居普、烏奇希薩爾、阿瓦諾斯、恰烏辛或奧塔希薩爾的返程接送接送。" name="description"/>
@@ -28,7 +29,93 @@
 <header><div class="wrap nav">
 <a class="brand" href="/zh-tw/"><img alt="" height="46" src="../../assets/logo.svg" width="46"/><span><strong>開塞利至卡帕多奇亞</strong><span>機場接送</span></span></a>
 <nav class="navlinks"><a href="/zh-tw/#routes">路線</a><a href="/zh-tw/#prices">價格</a><a href="/zh-tw/shared-shuttle-vs-private-transfer/">比較</a><a href="/zh-tw/faq/">常見問題</a><a href="/zh-tw/about/">關於我們</a><a href="/zh-tw/contact/">聯絡我們</a><a class="nav-book" href="/zh-tw/booking/">預訂</a><button class="lang">繁中 ▾</button></nav>
-<button aria-label="Menu" class="menu">☰</button></div></header><main><section class="section"><div class="wrap"><div class="full-booking"><div class="eyebrow">預訂</div><h1 style="font-size:48px">預訂接送</h1><p class="lead">選擇路線、日期與人數。航班及飯店資訊可在下一步新增。</p><form class="booking-card" style="margin-top:20px"><h2>接送申請</h2><div class="fields"><div class="field full"><label>行程類型</label><select><option>單程</option><option>來回</option></select></div><div class="field full"><label>出發地</label><select><option>Kayseri Airport (ASR)</option><option>Göreme 飯店</option><option>Ürgüp 飯店</option><option>Uçhisar 飯店</option><option>Avanos 飯店</option><option>Çavuşin 飯店</option><option>Ortahisar 飯店</option></select></div><div class="field full"><label>目的地</label><select><option>選擇目的地</option><option>Göreme</option><option>Ürgüp</option><option>Uçhisar</option><option>Avanos</option><option>Çavuşin</option><option>Ortahisar</option><option>Kayseri Airport (ASR)</option></select></div><div class="field"><label>接送日期</label><input type="date"/></div><div class="field"><label>乘客人數</label><input max="16" min="1" type="number" value="1"/></div><div class="field full"><label>接送類型</label><select><option>共乘接送</option><option>私人 Vito</option><option>私人 Sprinter</option></select></div></div><button class="primary" style="width:100%;margin-top:14px" type="submit">繼續預訂 →</button><div class="form-note">電子郵件發送功能稍後連接。目前此表單僅展示預訂流程。</div></form></div></div></section></main><footer><div class="wrap"><div class="footer-grid">
+<button aria-label="Menu" class="menu">☰</button></div></header><main><section class="section"><div class="wrap"><div class="full-booking">
+<div class="eyebrow">預訂申請</div><h1 style="font-size:48px">預訂開塞利機場接送</h1><p class="lead">填寫以下資訊並送出後，預訂申請會透過電子郵件傳送給我們的團隊，同時開啟含有相同預訂編號的 WhatsApp 訊息。</p>
+<div class="notice">第 1 步填寫接送與聯絡資訊。乘客姓名及護照號碼在第 2 步填寫，因為預訂及機場接送申報需要這些資料。</div>
+<div class="trust-strip" style="margin-top:20px">
+<div class="feature"><strong>提前24小時免費取消</strong><span>接送前24小時以上可免費取消。</span></div>
+<div class="feature"><strong>僅接受現金付款</strong><span>向司機以 EUR、USD 或 TRY 現金付款，不接受信用卡。</span></div>
+<div class="feature"><strong>追蹤航班延誤</strong><span>正確填寫航班號後會進行追蹤，因航班延誤產生的等候不收取額外費用。</span></div>
+</div><form class="booking-card" data-email-integration="resend" id="full-booking" style="margin-top:20px">
+<div class="fields">
+<div class="field full">
+<label>行程類型</label>
+<select id="trip-type" name="trip_type" required=""><option value="One Way">單程</option><option value="Round Trip">往返</option></select>
+</div>
+<div class="field full">
+<label>接送類型</label>
+<select name="service" required="">
+<option value="">選擇接送類型</option>
+<option value="shared">共乘接送 — €15/人</option>
+<option value="vito">私人 Vito — €90/程（最多5人）</option>
+<option value="sprinter">私人 Sprinter — €110/程（最多16人）</option>
+</select>
+</div>
+<div class="field">
+<label>接送方向</label>
+<select name="direction" required="">
+<option value="from_airport">從開塞利機場出發</option>
+<option value="to_airport">前往開塞利機場</option>
+</select>
+</div>
+<div class="field">
+<label>目的地</label>
+<select name="destination" required="">
+<option value="">選擇目的地</option>
+<option value="Göreme">Göreme</option>
+<option value="Ürgüp">Ürgüp</option>
+<option value="Uçhisar">Uçhisar</option>
+<option value="Avanos">Avanos</option>
+<option value="Çavuşin">Çavuşin</option>
+<option value="Ortahisar">Ortahisar</option>
+</select>
+</div>
+<div class="field">
+<label>接送日期</label>
+<input name="date" required="" type="date"/>
+</div>
+<div class="field">
+<label>航班號</label>
+<input name="flight" placeholder="例如 TK2010" required=""/>
+</div><div class="field"><label>航班時間</label><input name="flight_time" placeholder="例如 20:40" required="" type="time"/></div>
+<div class="field full">
+<label>飯店 / 住宿</label>
+<input name="hotel" placeholder="飯店或住宿的完整名稱" required=""/>
+</div>
+<div class="field full" hidden="" id="return-fields">
+<div class="fields"><div class="field"><label>回程日期</label><input name="return_date" type="date"/></div><div class="field"><label>回程航班號</label><input name="return_flight" placeholder="例如 TK2011"/></div></div>
+</div>
+<div class="field">
+<label>乘客人數</label>
+<select id="passengers" name="passengers" required="">
+<option value="1">1</option><option value="2">2</option><option value="3">3</option>
+<option value="4">4</option><option value="5">5</option><option value="6">6</option>
+<option value="7">7</option><option value="8">8</option><option value="9">9</option>
+<option value="10">10</option><option value="11">11</option><option value="12">12</option>
+<option value="13">13</option><option value="14">14</option><option value="15">15</option>
+<option value="16">16</option>
+</select>
+</div><div class="field"><label>聯絡 WHATSAPP</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="國碼 + 手機號碼，例如 447957940844" required="" type="tel"/></div>
+<div class="field">
+<label>付款</label>
+<input aria-readonly="true" readonly="" value="向司機現金付款 — EUR / USD / TRY"/>
+</div>
+<div class="field full">
+<div class="notice">費用以現金支付給司機，可使用 EUR、USD 或 TRY，不接受信用卡。接送前24小時以上可免費取消。</div>
+</div>
+</div>
+<button class="primary" id="continue-booking" style="width:100%;margin-top:14px" type="button">繼續填寫乘客資訊 →</button>
+<div hidden="" id="passenger-step" style="margin-top:22px">
+<div class="notice"><strong>乘客資訊</strong><br/>護照資訊僅在此步驟填寫，因為 Türkiye 的預訂及機場接送申報需要這些資料。</div>
+<div id="passenger-fields"></div>
+<div class="field" style="margin-top:12px">
+<label>備註（選填）</label>
+<textarea name="notes" placeholder="抵達說明或其他重要資訊"></textarea>
+</div>
+<div aria-hidden="true" hidden=""><label>Website<input autocomplete="off" name="website" tabindex="-1"/></label></div><button class="primary" style="width:100%;margin-top:14px" type="submit">透過電子郵件和 WhatsApp 傳送預訂申請 →</button>
+</div>
+<div class="form-note">預訂資訊會安全地透過電子郵件傳送給我們的團隊，之後開啟含有相同預訂編號的 WhatsApp。</div>
+</form></div></div></section></main><footer><div class="wrap"><div class="footer-grid">
 <div><div class="footer-brand"><img alt="" height="48" src="../../assets/logo.svg" width="48"/><div><h3>開塞利至卡帕多奇亞 機場接送</h3><p>開塞利機場出發的共乘接送與私人接送。</p></div></div><p>Ekwo Travel &amp; Outdoor Travel Agency<br/>TURSAB No: 7896</p></div>
 <div><h3>路線</h3><a href="/zh-tw/kayseri-airport-to-goreme/">Göreme</a><a href="/zh-tw/kayseri-airport-to-urgup/">Ürgüp</a><a href="/zh-tw/kayseri-airport-to-uchisar/">Uçhisar</a><a href="/zh-tw/kayseri-airport-to-avanos/">Avanos</a><a href="/zh-tw/kayseri-airport-to-cavusin/">Çavuşin</a><a href="/zh-tw/kayseri-airport-to-ortahisar/">Ortahisar</a></div>
 <div><h3>資訊</h3><a href="/zh-tw/about/">關於我們</a><a href="/zh-tw/faq/">常見問題</a><a href="/zh-tw/contact/">聯絡我們</a><a href="/zh-tw/booking/">預訂</a></div>
