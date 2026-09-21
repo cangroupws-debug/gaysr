@@ -21,6 +21,23 @@
     "ms-my":{direct:"Hai, saya ada pertanyaan tentang transfer dari Lapangan Terbang Kayseri.",booking:"Permintaan transfer",trip:"Jenis perjalanan",service:"Jenis transfer",direction:"Arah perjalanan",route:"Laluan",date:"Tarikh",flight:"Penerbangan",returnDate:"Tarikh pulang",returnFlight:"Penerbangan pulang",hotel:"Hotel",passengers:"Jumlah penumpang",payment:"Pembayaran",cash:"Bayaran tunai kepada pemandu (EUR / USD / TRY)",passenger:"Penumpang",name:"Nama penuh",passport:"Nombor pasport",notes:"Catatan",confirm:"Sila sahkan permintaan transfer ini.",fullName:"NAMA PENUH",passportLabel:"NOMBOR PASPORT"}
   };
   const c=copy[locale] || copy.en;
+  const pickupTimeCopy={
+    en:{title:"HOTEL PICKUP TIME",text:"Your hotel pickup time will be arranged according to your flight code and confirmed with you."},
+    es:{title:"HORA DE RECOGIDA EN EL HOTEL",text:"La hora de recogida en su hotel se organizará según su código de vuelo y se le confirmará."},
+    "zh-cn":{title:"酒店接车时间",text:"酒店接车时间将根据您的航班号安排，并另行通知您。"},
+    ko:{title:"호텔 픽업 시간",text:"호텔 픽업 시간은 항공편 번호에 따라 조정한 후 안내해 드립니다."},
+    ja:{title:"ホテルお迎え時間",text:"ホテルのお迎え時間は便名に合わせて調整し、後ほどご案内します。"},
+    ru:{title:"ВРЕМЯ ВЫЕЗДА ИЗ ОТЕЛЯ",text:"Время выезда из отеля будет рассчитано по номеру рейса и подтверждено вам."},
+    it:{title:"ORARIO DI PRELIEVO IN HOTEL",text:"L’orario di prelievo in hotel sarà organizzato in base al codice del volo e vi verrà comunicato."},
+    de:{title:"ABHOLZEIT AM HOTEL",text:"Ihre Abholzeit am Hotel wird anhand Ihrer Flugnummer geplant und Ihnen bestätigt."},
+    pt:{title:"HORA DE RECOLHA NO HOTEL",text:"A hora de recolha no hotel será definida de acordo com o número do voo e comunicada a si."},
+    "zh-tw":{title:"飯店接送時間",text:"飯店接送時間將依您的航班號安排，並另行通知您。"},
+    fr:{title:"HEURE DE PRISE EN CHARGE À L’HÔTEL",text:"L’heure de prise en charge à votre hôtel sera organisée selon votre numéro de vol et vous sera confirmée."},
+    th:{title:"เวลารับที่โรงแรม",text:"เวลารับจากโรงแรมจะจัดตามรหัสเที่ยวบินของคุณ และจะแจ้งยืนยันให้ทราบ"},
+    id:{title:"WAKTU PENJEMPUTAN HOTEL",text:"Waktu penjemputan di hotel akan diatur berdasarkan kode penerbangan Anda dan dikonfirmasi kepada Anda."},
+    "ms-my":{title:"WAKTU JEMPUTAN HOTEL",text:"Waktu jemputan di hotel akan diatur berdasarkan kod penerbangan anda dan dimaklumkan kepada anda."}
+  };
+  const pickupCopy=pickupTimeCopy[locale] || pickupTimeCopy.en;
   function qs(sel,root=document){return root.querySelector(sel)}
   function qsa(sel,root=document){return [...root.querySelectorAll(sel)]}
 
@@ -65,7 +82,15 @@
     const passengerCount=qs("#passengers",full);
     const passengerWrap=qs("#passenger-fields",full);
     const tripType=qs("#trip-type",full);
+    const direction=full.elements.direction;
     const returnFields=qs("#return-fields",full);
+    const flightTimeInput=full.elements.flight_time;
+    const flightTimeField=flightTimeInput ? flightTimeInput.closest(".field") : null;
+    const pickupTimeNotice=document.createElement("div");
+    pickupTimeNotice.className="field full";
+    pickupTimeNotice.hidden=true;
+    pickupTimeNotice.innerHTML=`<label>${pickupCopy.title}</label><div style="padding:12px 14px;border:1px solid #d9e0e6;border-radius:10px;background:#f7f9fc;color:#596572;font-size:13px;line-height:1.5">${pickupCopy.text}</div>`;
+    if(flightTimeField) flightTimeField.insertAdjacentElement("afterend",pickupTimeNotice);
     const submitBtn=full.querySelector('button[type="submit"]');
     const submitLabel=submitBtn ? submitBtn.textContent : "";
 
@@ -111,18 +136,32 @@
       renderPassengers();
     }
 
+    function syncDirection(){
+      const hotelToAirport=tripType?.value!=="Round Trip" && direction?.value==="to_airport";
+      if(flightTimeField) flightTimeField.hidden=hotelToAirport;
+      if(flightTimeInput){
+        flightTimeInput.required=!hotelToAirport;
+        if(hotelToAirport) flightTimeInput.value="";
+      }
+      pickupTimeNotice.hidden=!hotelToAirport;
+    }
     function syncTripType(){
       const round=tripType && tripType.value==="Round Trip";
       if(returnFields) returnFields.hidden=!round;
       ["return_date","return_flight"].forEach(name=>{ const el=full.elements[name]; if(el) el.required=!!round; });
+      syncDirection();
     }
+    if(direction) direction.addEventListener("change",syncDirection);
     if(tripType){ tripType.addEventListener("change",syncTripType); syncTripType(); }
+    else syncDirection();
 
     const continueBtn=qs("#continue-booking");
     const passengerStep=qs("#passenger-step");
     if(continueBtn && passengerStep){
       continueBtn.addEventListener("click",()=>{
-        const requiredBefore=["trip_type","service","direction","destination","date","flight","flight_time","hotel","passengers","contact_whatsapp"];
+        const requiredBefore=["trip_type","service","direction","destination","date","flight","hotel","passengers","contact_whatsapp"];
+        const hotelToAirport=tripType?.value!=="Round Trip" && direction?.value==="to_airport";
+        if(!hotelToAirport) requiredBefore.splice(6,0,"flight_time");
         for(const name of requiredBefore){
           const el=full.elements[name];
           if(el && !el.checkValidity()){ el.reportValidity(); return; }
@@ -183,9 +222,13 @@
           body:JSON.stringify(payload)
         });
         const result=await response.json().catch(()=>({}));
-        if(!result.whatsappMessage) throw new Error(result.error||"Booking request could not be created.");
-        if(!response.ok) alert(result.message||"The email could not be delivered. WhatsApp will open so you can still send the booking request.");
-        location.href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(result.whatsappMessage)}`;
+        // If the server prepared the WhatsApp booking, open it even when Resend failed.
+        if(result.whatsappMessage){
+          location.href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(result.whatsappMessage)}`;
+          return;
+        }
+        if(!response.ok) throw new Error(result.message||result.error||"Booking request could not be prepared. Please try again.");
+        throw new Error("Booking request could not be prepared. Please try again.");
       }catch(err){
         alert(err && err.message ? err.message : "Booking request could not be sent. Please try again.");
       }finally{
@@ -194,7 +237,7 @@
     });
 
     // When the customer returns from WhatsApp with the browser Back button,
-    // the next submit always creates a new server-side KTC-MMDD-XXXX ID.
+    // the next submit always creates a fresh server-side KAT-MMDD-XXXX ID.
     window.addEventListener("pageshow",()=>{
       if(submitBtn){ submitBtn.disabled=false; submitBtn.textContent=submitLabel; }
     });
