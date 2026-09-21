@@ -592,30 +592,73 @@ module.exports = async function handler(req,res){
 
   const apiKey=process.env.RESEND_API_KEY || "";
   const from=process.env.RESEND_FROM_EMAIL || "Kayseri Airport Transfer <onboarding@resend.dev>";
-  const to=process.env.RESEND_TO_EMAIL || "";
-  let emailOk=false, emailId=null;
+  const to=process.env.BOOKING_TO_EMAIL || process.env.RESEND_TO_EMAIL || "";
+  let emailOk=false, emailId=null, emailStatus="not_attempted";
 
-  if(apiKey && to){
+  console.log("BOOKING_RECEIVED",{
+    bookingId:id,
+    locale,
+    direction:directionKey,
+    destination:destination.mail,
+    hasResendApiKey:!!apiKey,
+    hasBookingRecipient:!!to
+  });
+
+  if(!apiKey){
+    emailStatus="skipped_missing_resend_api_key";
+    console.error("EMAIL_SKIPPED: RESEND_API_KEY missing",{bookingId:id});
+  }else if(!to){
+    emailStatus="skipped_missing_booking_to_email";
+    console.error("EMAIL_SKIPPED: BOOKING_TO_EMAIL / RESEND_TO_EMAIL missing",{bookingId:id});
+  }else{
     try{
+      emailStatus="sending";
+      console.log("RESEND_SEND_START",{bookingId:id,from,toConfigured:true});
+
       const rr=await fetch("https://api.resend.com/emails",{
         method:"POST",
         headers:{"Authorization":`Bearer ${apiKey}`,"Content-Type":"application/json"},
-        body:JSON.stringify({from,to:[to],subject:`Yeni rezervasyon · ${id} · ${destination.mail} · ${service.label}`,html,text})
+        body:JSON.stringify({
+          from,
+          to:[to],
+          subject:`Yeni rezervasyon · ${id} · ${destination.mail} · ${service.label}`,
+          html,
+          text
+        })
       });
+
       const resendBody=await rr.json().catch(()=>({}));
+
       if(rr.ok){
         emailOk=true;
         emailId=resendBody.id || null;
+        emailStatus="sent";
+        console.log("RESEND_SEND_OK",{bookingId:id,emailId});
       }else{
-        console.error("Resend booking email failed",{status:rr.status,bookingId:id,error:resendBody});
+        emailStatus=`failed_http_${rr.status}`;
+        console.error("RESEND_SEND_FAILED",{
+          status:rr.status,
+          bookingId:id,
+          error:resendBody
+        });
       }
     }catch(err){
-      console.error("Resend booking email exception",{bookingId:id,message:err?.message});
+      emailStatus="failed_exception";
+      console.error("RESEND_SEND_EXCEPTION",{
+        bookingId:id,
+        message:err?.message || String(err)
+      });
     }
-  }else{
-    console.warn("Resend booking email skipped",{bookingId:id,hasApiKey:!!apiKey,hasRecipient:!!to});
   }
 
   // WhatsApp is the safety net: email failure never blocks the customer's booking request.
-  return res.status(200).json({ok:true,bookingId:id,totalPrice:`EUR ${total}`,emailOk,emailId,whatsappMessage});
+  return res.status(200).json({
+    ok:true,
+    bookingId:id,
+    totalPrice:`EUR ${total}`,
+    emailOk,
+    emailStatus,
+    emailId,
+    whatsappMessage
+  });
 };

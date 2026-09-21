@@ -21,6 +21,13 @@
     "ms-my":{direct:"Hai, saya ada pertanyaan tentang transfer dari Lapangan Terbang Kayseri.",booking:"Permintaan transfer",trip:"Jenis perjalanan",service:"Jenis transfer",direction:"Arah perjalanan",route:"Laluan",date:"Tarikh",flight:"Penerbangan",returnDate:"Tarikh pulang",returnFlight:"Penerbangan pulang",hotel:"Hotel",passengers:"Jumlah penumpang",payment:"Pembayaran",cash:"Bayaran tunai kepada pemandu (EUR / USD / TRY)",passenger:"Penumpang",name:"Nama penuh",passport:"Nombor pasport",notes:"Catatan",confirm:"Sila sahkan permintaan transfer ini.",fullName:"NAMA PENUH",passportLabel:"NOMBOR PASPORT"}
   };
   const c=copy[locale] || copy.en;
+  if(!document.getElementById("booking-hidden-fix")){
+    const st=document.createElement("style");
+    st.id="booking-hidden-fix";
+    st.textContent='[hidden]{display:none !important;}';
+    document.head.appendChild(st);
+  }
+
   const pickupTimeCopy={
     en:{title:"HOTEL PICKUP TIME",text:"Your hotel pickup time will be arranged according to your flight code and confirmed with you."},
     es:{title:"HORA DE RECOGIDA EN EL HOTEL",text:"La hora de recogida en su hotel se organizará según su código de vuelo y se le confirmará."},
@@ -89,6 +96,7 @@
     const pickupTimeNotice=document.createElement("div");
     pickupTimeNotice.className="field full";
     pickupTimeNotice.hidden=true;
+    pickupTimeNotice.style.display="none";
     pickupTimeNotice.innerHTML=`<label>${pickupCopy.title}</label><div style="padding:12px 14px;border:1px solid #d9e0e6;border-radius:10px;background:#f7f9fc;color:#596572;font-size:13px;line-height:1.5">${pickupCopy.text}</div>`;
     if(flightTimeField) flightTimeField.insertAdjacentElement("afterend",pickupTimeNotice);
     const submitBtn=full.querySelector('button[type="submit"]');
@@ -138,17 +146,36 @@
 
     function syncDirection(){
       const hotelToAirport=tripType?.value!=="Round Trip" && direction?.value==="to_airport";
-      if(flightTimeField) flightTimeField.hidden=hotelToAirport;
+
+      if(flightTimeField){
+        flightTimeField.hidden=hotelToAirport;
+        flightTimeField.style.display=hotelToAirport ? "none" : "";
+      }
       if(flightTimeInput){
         flightTimeInput.required=!hotelToAirport;
         if(hotelToAirport) flightTimeInput.value="";
       }
+
       pickupTimeNotice.hidden=!hotelToAirport;
+      pickupTimeNotice.style.display=hotelToAirport ? "" : "none";
     }
+
     function syncTripType(){
       const round=tripType && tripType.value==="Round Trip";
-      if(returnFields) returnFields.hidden=!round;
-      ["return_date","return_flight"].forEach(name=>{ const el=full.elements[name]; if(el) el.required=!!round; });
+
+      if(returnFields){
+        returnFields.hidden=!round;
+        returnFields.style.display=round ? "" : "none";
+      }
+
+      ["return_date","return_flight"].forEach(name=>{
+        const el=full.elements[name];
+        if(el){
+          el.required=!!round;
+          if(!round) el.value="";
+        }
+      });
+
       syncDirection();
     }
     if(direction) direction.addEventListener("change",syncDirection);
