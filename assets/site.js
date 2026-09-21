@@ -5,7 +5,7 @@
   const locale=localeMatch ? localeMatch[1] : "en";
   const localePrefix=locale === "en" ? "" : `/${locale}`;
   const copy={
-    en:{direct:"Hello, I have a question about a Kayseri Airport transfer.",booking:"Booking request",trip:"Trip type",service:"Transfer option",direction:"Direction",route:"Route",date:"Date",flight:"Flight",returnDate:"Return date",returnFlight:"Return flight",hotel:"Hotel",passengers:"Total passengers",payment:"Payment",cash:"Cash to the driver (EUR / USD / TRY)",passenger:"Passenger",name:"Name and surname",passport:"Passport number",notes:"Notes",confirm:"Please confirm this transfer request.",fullName:"FULL NAME",passportLabel:"PASSPORT NUMBER"},
+    en:{direct:"Hello, I have a question about a Kayseri Airport transfer.",booking:"Booking request",trip:"Trip type",service:"Transfer option",direction:"Direction",route:"Route",date:"Date",flight:"Flight",returnDate:"Return date",returnFlight:"Return flight",hotel:"Hotel",passengers:"Total passengers",payment:"Payment",cash:"Cash to the driver (EUR / USD / TRY)",passenger:"Passenger",name:"Name and surname",passport:"Passport number",notes:"Notes",confirm:"Please confirm this transfer request.",fullName:"NAME SURNAME",passportLabel:"PASSPORT NUMBER"},
     es:{direct:"Hola, tengo una pregunta sobre un traslado desde el aeropuerto de Kayseri.",booking:"Solicitud de traslado",trip:"Tipo de viaje",service:"Tipo de traslado",direction:"Dirección",route:"Ruta",date:"Fecha",flight:"Vuelo",returnDate:"Fecha de regreso",returnFlight:"Vuelo de regreso",hotel:"Hotel",passengers:"Pasajeros totales",payment:"Pago",cash:"Pago en efectivo al conductor (EUR / USD / TRY)",passenger:"Pasajero",name:"Nombre y apellidos",passport:"Número de pasaporte",notes:"Notas",confirm:"Confirme esta solicitud de traslado.",fullName:"NOMBRE COMPLETO",passportLabel:"NÚMERO DE PASAPORTE"},
     "zh-cn":{direct:"您好，我想咨询开塞利机场接送服务。",booking:"接送申请",trip:"行程类型",service:"接送类型",direction:"接送方向",route:"路线",date:"日期",flight:"航班",returnDate:"返程日期",returnFlight:"返程航班",hotel:"酒店",passengers:"乘客总数",payment:"付款",cash:"向司机现金支付（EUR / USD / TRY）",passenger:"乘客",name:"姓名",passport:"护照号码",notes:"备注",confirm:"请确认这项接送申请。",fullName:"姓名",passportLabel:"护照号码"},
     ko:{direct:"안녕하세요. 카이세리 공항 픽업 서비스에 대해 문의드리고 싶습니다.",booking:"예약 요청",trip:"여행 유형",service:"이동 서비스",direction:"이동 방향",route:"경로",date:"날짜",flight:"항공편",returnDate:"귀국 날짜",returnFlight:"귀국 항공편",hotel:"호텔",passengers:"총 승객 수",payment:"결제",cash:"기사님께 현금 결제 (EUR / USD / TRY)",passenger:"승객",name:"성명",passport:"여권 번호",notes:"메모",confirm:"이 이동 서비스를 신청합니다.",fullName:"성명",passportLabel:"여권 번호"},
@@ -134,7 +134,7 @@
             <h3>${c.passenger} ${i}</h3>
             <div class="fields">
               <div class="field"><label>${c.fullName}</label><input name="passenger_name_${i}" maxlength="100" autocomplete="name" required></div>
-              <div class="field"><label>${c.passportLabel}</label><input name="passport_${i}" maxlength="50" autocomplete="off" required></div>
+              <div class="field"><label>${c.passportLabel}</label><input name="passport_${i}" maxlength="50" autocomplete="off"></div>
             </div>
           </div>`);
       }
@@ -206,12 +206,62 @@
       });
     }
 
+    function freshBookingId(){
+      const parts=new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Istanbul",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
+      const mm=parts.find(p=>p.type==="month")?.value || "00";
+      const dd=parts.find(p=>p.type==="day")?.value || "00";
+      const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      const rnd=new Uint32Array(4);
+      if(window.crypto?.getRandomValues) window.crypto.getRandomValues(rnd);
+      else for(let i=0;i<4;i++) rnd[i]=Math.floor(Math.random()*0xffffffff);
+      let suffix="";
+      for(let i=0;i<4;i++) suffix+=chars[rnd[i]%chars.length];
+      return `KAT-${mm}${dd}-${suffix}`;
+    }
+
+    function selectedText(name){
+      const el=full.elements[name];
+      if(!el) return "";
+      if(el.tagName==="SELECT") return el.selectedOptions?.[0]?.textContent?.trim() || el.value || "";
+      return el.value || "";
+    }
+
+    function emergencyWhatsAppMessage(payload){
+      const lines=["Booking request",`Booking ID: ${payload.bookingId}`];
+      lines.push(`${c.trip}: ${selectedText("trip_type")}`);
+      lines.push(`${c.service}: ${selectedText("service")}`);
+      lines.push(`${c.direction}: ${selectedText("direction")}`);
+      lines.push(`${c.route}: ${selectedText("destination")}`);
+      lines.push(`${c.date}: ${payload.date}`);
+      lines.push(`${c.flight}: ${payload.flight}${payload.flightTime ? " · "+payload.flightTime : ""}`);
+      if(payload.tripType==="round_trip"){
+        lines.push(`${c.returnDate}: ${payload.returnDate}`);
+        lines.push(`${c.returnFlight}: ${payload.returnFlight}`);
+      }
+      lines.push(`${c.hotel}: ${payload.hotel}`);
+      lines.push(`${c.passengers}: ${payload.passengerCount}`);
+      if(payload.contactWhatsApp) lines.push(`WhatsApp: ${payload.contactWhatsApp}`);
+      payload.passengers.forEach((p,i)=>{
+        lines.push("");
+        lines.push(`${c.passenger} ${i+1}`);
+        lines.push(`${c.name}: ${p.name}`);
+        lines.push(`${c.passport}: ${p.passport || "—"}`);
+      });
+      lines.push("");
+      lines.push(`${c.payment}: ${c.cash}`);
+      if(payload.notes) lines.push(`${c.notes}: ${payload.notes}`);
+      lines.push("");
+      lines.push(c.confirm);
+      return lines.join("\\n");
+    }
+
     function bookingPayload(){
       const d=new FormData(full);
       const count=Math.max(1,Math.min(16,parseInt(d.get("passengers")||"1",10)));
       const passengers=[];
       for(let i=1;i<=count;i++) passengers.push({name:d.get("passenger_name_"+i)||"",passport:d.get("passport_"+i)||""});
       return {
+        bookingId:freshBookingId(),
         language:locale,
         tripType:d.get("trip_type")==="Round Trip" ? "round_trip" : "one_way",
         service:d.get("service"),
@@ -241,7 +291,15 @@
         full.elements.passengers.setCustomValidity("");
         return;
       }
-      if(submitBtn){ submitBtn.disabled=true; submitBtn.dataset.originalLabel=submitLabel; submitBtn.textContent=submitLabel.replace(/\s*[→›]\s*$/,'')+"…"; }
+      if(submitBtn){
+        submitBtn.disabled=true;
+        submitBtn.dataset.originalLabel=submitLabel;
+        submitBtn.textContent=submitLabel.replace(/\s*[→›]\s*$/,'')+"…";
+      }
+
+      const fallbackMessage=emergencyWhatsAppMessage(payload);
+      let whatsappMessage=fallbackMessage;
+
       try{
         const response=await fetch("/api/booking",{
           method:"POST",
@@ -249,18 +307,19 @@
           body:JSON.stringify(payload)
         });
         const result=await response.json().catch(()=>({}));
-        // If the server prepared the WhatsApp booking, open it even when Resend failed.
-        if(result.whatsappMessage){
-          location.href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(result.whatsappMessage)}`;
-          return;
+        if(typeof result.whatsappMessage==="string" && result.whatsappMessage.trim()){
+          whatsappMessage=result.whatsappMessage;
         }
-        if(!response.ok) throw new Error(result.message||result.error||"Booking request could not be prepared. Please try again.");
-        throw new Error("Booking request could not be prepared. Please try again.");
       }catch(err){
-        alert(err && err.message ? err.message : "Booking request could not be sent. Please try again.");
+        console.warn("Booking API unavailable; using WhatsApp fallback.");
       }finally{
-        if(submitBtn){ submitBtn.disabled=false; submitBtn.textContent=submitLabel; }
+        if(submitBtn){
+          submitBtn.disabled=false;
+          submitBtn.textContent=submitLabel;
+        }
       }
+
+      location.href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
     });
 
     // When the customer returns from WhatsApp with the browser Back button,

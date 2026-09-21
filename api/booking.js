@@ -513,13 +513,15 @@ module.exports = async function handler(req,res){
   if(!/^[A-Z0-9]{2,12}$/.test(flight)) errors.push("flight");
   if(hotel.length<2) errors.push("hotel");
   if(contactWhatsApp.length<7 || contactWhatsApp.length>15) errors.push("contact_whatsapp");
-  if(passengers.length!==passengerCount || passengers.some(p=>!p.name || !p.passport)) errors.push("passengers");
+  if(passengers.length!==passengerCount || passengers.some(p=>!p.name)) errors.push("passengers");
   if(tripType==="round_trip" && (!/^\d{4}-\d{2}-\d{2}$/.test(returnDate) || !/^[A-Z0-9]{2,12}$/.test(returnFlight))) errors.push("return");
   if(service?.max && passengerCount>service.max) errors.push("capacity");
   if(errors.length) return res.status(400).json({error:"invalid_booking_data",fields:errors,message:"Please check the booking details and try again."});
 
-  // A fresh ID is created for every new POST. Nothing is stored in the browser, so Back + resubmit gets a new ID.
-  const id=bookingId();
+  // The browser creates a fresh ID on every submit so WhatsApp can still work if email/API delivery fails.
+  // If an older client does not send one, generate it here as a fallback.
+  const requestedId=clean(body.bookingId,20).toUpperCase();
+  const id=/^KAT-\d{4}-[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{4}$/.test(requestedId) ? requestedId : bookingId();
   const legs=tripType==="round_trip" ? 2 : 1;
   const total = service.perPerson ? service.perPerson*passengerCount*legs : service.fixed*legs;
   const mailTransferType = tripType==="round_trip" ? "Gidiş-Dönüş Transfer" : "Tek Yön Transfer";
@@ -552,7 +554,7 @@ module.exports = async function handler(req,res){
   mailRows.push(["Otel / Konaklama",esc(hotel)]);
   mailRows.push(["Yolcu Sayısı",String(passengerCount)]);
   mailRows.push(["İletişim WhatsApp",contactHtml]);
-  passengers.forEach((p,i)=>mailRows.push([`Yolcu ${i+1}`,`${esc(p.name)}<br>Pasaport: ${esc(p.passport)}`]));
+  passengers.forEach((p,i)=>mailRows.push([`Yolcu ${i+1}`,`${esc(p.name)}<br>Pasaport: ${esc(p.passport || "—")}`]));
   mailRows.push(["Toplam Fiyat",`EUR ${total}`]);
   mailRows.push(["Ödeme",paymentMail]);
   mailRows.push(["Notlar",esc(noteValue)]);
@@ -582,7 +584,7 @@ module.exports = async function handler(req,res){
   wa.push(`${l.hotel}: ${hotel}`);
   wa.push(`${l.passengers}: ${passengerCount}`);
   wa.push(`${l.contact}: ${phoneDisplay}`);
-  passengers.forEach((p,i)=>{ wa.push(`${l.passenger} ${i+1}: ${p.name}`); wa.push(`${l.passport}: ${p.passport}`); });
+  passengers.forEach((p,i)=>{ wa.push(`${l.passenger} ${i+1}: ${p.name}`); wa.push(`${l.passport}: ${p.passport || "—"}`); });
   wa.push(`${l.total}: EUR ${total}`);
   wa.push(`${l.payment}: ${l.cash}`);
   wa.push(`${l.notes}: ${noteValue}`);
