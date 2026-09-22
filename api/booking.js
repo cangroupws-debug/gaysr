@@ -490,92 +490,12 @@ module.exports = async function handler(req,res){
   const apiKeyConfigured=!!(process.env.RESEND_API_KEY || "");
   const recipientConfigured=!!(process.env.BOOKING_TO_EMAIL || process.env.RESEND_TO_EMAIL || "");
 
-  if(req.method === "GET"){
-    const diagToken=clean(req.query?.diag,80);
-
-    if(diagToken === "KATMAIL-AF1739F795"){
-      const apiKey=process.env.RESEND_API_KEY || "";
-      const to=process.env.BOOKING_TO_EMAIL || process.env.RESEND_TO_EMAIL || "";
-      const from=process.env.RESEND_FROM_EMAIL || "Kayseri Airport Transfer <onboarding@resend.dev>";
-
-      if(!apiKey || !to){
-        return res.status(500).json({
-          ok:false,
-          build:"v11",
-          stage:"config",
-          resendApiKeyConfigured:!!apiKey,
-          bookingRecipientConfigured:!!to
-        });
-      }
-
-      try{
-        const rr=await fetch("https://api.resend.com/emails",{
-          method:"POST",
-          headers:{
-            "Authorization":`Bearer ${apiKey}`,
-            "Content-Type":"application/json"
-          },
-          body:JSON.stringify({
-            from,
-            to:[to],
-            subject:"KAT direct Resend diagnostic test",
-            text:"This is a direct Vercel → Resend diagnostic test. No booking was created."
-          })
-        });
-
-        const raw=await rr.text();
-        let parsed;
-        try{ parsed=JSON.parse(raw); }catch{ parsed={raw:raw.slice(0,1000)}; }
-
-        console.log("DIRECT_RESEND_DIAGNOSTIC",{
-          build:"v11",
-          status:rr.status,
-          ok:rr.ok,
-          response:parsed
-        });
-
-        return res.status(rr.ok ? 200 : 502).json({
-          ok:rr.ok,
-          build:"v11",
-          stage:"resend_response",
-          httpStatus:rr.status,
-          resendResponse:parsed
-        });
-      }catch(err){
-        console.error("DIRECT_RESEND_DIAGNOSTIC_EXCEPTION",{
-          build:"v11",
-          message:err?.message || String(err),
-          cause:err?.cause?.message || null,
-          causeCode:err?.cause?.code || null
-        });
-
-        return res.status(502).json({
-          ok:false,
-          build:"v11",
-          stage:"fetch_exception",
-          message:err?.message || String(err),
-          cause:err?.cause?.message || null,
-          causeCode:err?.cause?.code || null
-        });
-      }
-    }
-
-    return res.status(200).json({
-      ok:true,
-      endpoint:"booking",
-      build:"v11",
-      resendApiKeyConfigured:apiKeyConfigured,
-      bookingRecipientConfigured:recipientConfigured,
-      customFromConfigured:!!(process.env.RESEND_FROM_EMAIL || "")
-    });
-  }
-
   if(req.method !== "POST") return res.status(405).json({error:"method_not_allowed"});
 
   const body = typeof req.body === "string" ? (()=>{try{return JSON.parse(req.body)}catch{return {}}})() : (req.body || {});
 
   console.log("BOOKING_POST_RECEIVED",{
-    build:"v11",
+    build:"v17",
     hasResendApiKey:apiKeyConfigured,
     hasBookingRecipient:recipientConfigured
   });
@@ -583,7 +503,7 @@ module.exports = async function handler(req,res){
   // Do not silently discard a real customer's booking because a browser/password manager
   // happened to fill a honeypot field. WhatsApp + server validation already protect the flow.
   if(clean(body.website,100)){
-    console.warn("BOOKING_HONEYPOT_FILLED_BUT_CONTINUING",{build:"v11"});
+    console.warn("BOOKING_HONEYPOT_FILLED_BUT_CONTINUING",{build:"v17"});
   }
 
   const language = LANGS.has(clean(body.language,20)) ? clean(body.language,20) : "en";
@@ -615,7 +535,7 @@ module.exports = async function handler(req,res){
   if(service?.max && passengerCount>service.max) errors.push("capacity");
   if(errors.length){
     console.error("BOOKING_VALIDATION_FAILED",{
-      build:"v11",
+      build:"v17",
       fields:errors,
       service:serviceKey,
       direction:directionKey,
@@ -626,7 +546,7 @@ module.exports = async function handler(req,res){
       error:"invalid_booking_data",
       fields:errors,
       message:"Please check the booking details and try again.",
-      build:"v11"
+      build:"v17"
     });
   }
 
@@ -710,7 +630,7 @@ module.exports = async function handler(req,res){
   let emailOk=false, emailId=null, emailStatus="not_attempted";
 
   console.log("BOOKING_RECEIVED",{
-    build:"v11",
+    build:"v17",
     bookingId:id,
     language,
     direction:directionKey,
