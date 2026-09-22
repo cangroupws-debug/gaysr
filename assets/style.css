@@ -72,10 +72,11 @@ input:focus,select:focus,textarea:focus{border-color:#97a9b9;box-shadow:0 0 0 3p
 .section-head h2{font-size:34px;margin:0;letter-spacing:-.025em}
 .section-head p{margin:5px 0 0;color:var(--muted);max-width:650px}
 .text-link{color:var(--ink2);font-weight:850;font-size:13px}
+#routes .route-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .route-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
 .route-card{border:1px solid var(--line);border-radius:13px;background:#fff;padding:15px;transition:.18s}
 .route-card:hover{transform:translateY(-2px);box-shadow:0 9px 22px rgba(13,43,75,.07)}
-.route-symbol{height:62px;border-radius:10px;background:#fbf8f1 url('cappadocia-fairy-chimneys-card.webp') center/contain no-repeat;margin-bottom:11px;opacity:1;border:1px solid #ead9ba}
+.route-symbol{aspect-ratio:3/1;height:auto;min-height:48px;border-radius:10px;background:#fbf8f1 url('cappadocia-fairy-chimneys-card.webp') center/contain no-repeat;margin-bottom:11px;opacity:1;border:1px solid #ead9ba}
 .route-card h3{font-size:17px;margin:0}
 .route-meta{display:flex;gap:8px;color:#687582;font-size:11px;font-weight:750;margin:8px 0 11px}
 .route-card .primary{min-height:38px;font-size:12px}
@@ -157,6 +158,7 @@ footer p{color:#aebdc9;font-size:12px;line-height:1.6}
   .hero-fleet img{max-width:100%}
   .hero:after{opacity:.28}
   .route-grid{grid-template-columns:repeat(3,1fr)}
+  #routes .route-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
   .why-grid{grid-template-columns:1fr 1fr}
   .why-intro{grid-column:1/-1;padding:0 0 16px}
   .why-card{border-left:0;border-top:1px solid #e6dfd3;padding:15px 10px}
@@ -174,6 +176,7 @@ footer p{color:#aebdc9;font-size:12px;line-height:1.6}
   .fields{grid-template-columns:1fr}.field.full{grid-column:auto}
   .price-grid,.route-prices,.feature-row{grid-template-columns:1fr}
   .route-grid{grid-template-columns:1fr 1fr}
+  #routes .route-grid{grid-template-columns:1fr 1fr}
   .route-symbol{height:48px}
   .section{padding:42px 0}.section-head{display:block}.section-head h2{font-size:29px}.text-link{display:inline-block;margin-top:8px}
   .why-grid{grid-template-columns:1fr}.why-card{padding:13px 0}
@@ -352,3 +355,5 @@ footer p{color:#aebdc9;font-size:12px;line-height:1.6}
 
 /* Language popover is hidden until the existing language button is clicked. */
 .navlinks{position:relative}.language-popover{position:absolute;right:0;top:48px;z-index:100;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:8px;min-width:190px;display:grid;gap:2px}.language-popover a{padding:8px 10px;border-radius:8px;color:var(--ink);font-size:13px;font-weight:700}.language-popover a:hover{background:var(--wash)}
+
+@media(min-width:981px){#routes .route-card{padding:16px}#routes .route-card .primary{white-space:nowrap}#routes .route-meta{font-size:12px;gap:12px}}

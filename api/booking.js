@@ -611,6 +611,7 @@ module.exports = async function handler(req,res){
   if(contactWhatsApp.length<7 || contactWhatsApp.length>15) errors.push("contact_whatsapp");
   if(passengers.length!==passengerCount || passengers.some(p=>!p.name)) errors.push("passengers");
   if(tripType==="round_trip" && (!/^\d{4}-\d{2}-\d{2}$/.test(returnDate) || returnFlight.length<2 || returnFlight.length>30)) errors.push("return");
+  if(tripType==="round_trip" && /^\d{4}-\d{2}-\d{2}$/.test(date) && /^\d{4}-\d{2}-\d{2}$/.test(returnDate) && returnDate < date) errors.push("return_date_before_transfer");
   if(service?.max && passengerCount>service.max) errors.push("capacity");
   if(errors.length){
     console.error("BOOKING_VALIDATION_FAILED",{

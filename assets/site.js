@@ -28,6 +28,24 @@
     document.head.appendChild(st);
   }
 
+  const sameDayReturnCopy={
+    en:"Return transfer is on the same day as the first transfer. Please check the dates.",
+    es:"El traslado de regreso es el mismo día que el primer traslado. Compruebe las fechas.",
+    "zh-cn":"返程接送与去程接送在同一天，请检查日期。",
+    ko:"귀국 이동이 첫 이동과 같은 날입니다. 날짜를 확인해 주세요.",
+    ja:"復路送迎が往路送迎と同じ日です。日付をご確認ください。",
+    ru:"Обратный трансфер назначен на тот же день, что и первый. Проверьте даты.",
+    it:"Il transfer di ritorno è lo stesso giorno del primo transfer. Controlla le date.",
+    de:"Der Rücktransfer findet am selben Tag wie der erste Transfer statt. Bitte prüfen Sie die Daten.",
+    pt:"O transfer de regresso é no mesmo dia do primeiro transfer. Verifique as datas.",
+    "zh-tw":"回程接送與去程接送在同一天，請檢查日期。",
+    fr:"Le transfert retour est prévu le même jour que le premier transfert. Vérifiez les dates.",
+    th:"รถรับส่งขากลับเป็นวันเดียวกับรถรับส่งเที่ยวแรก กรุณาตรวจสอบวันที่",
+    id:"Transfer pulang berada pada hari yang sama dengan transfer pertama. Periksa kembali tanggalnya.",
+    "ms-my":"Transfer pulang adalah pada hari yang sama dengan transfer pertama. Sila semak tarikhnya."
+  };
+  const sameDayReturnWarning=sameDayReturnCopy[locale] || sameDayReturnCopy.en;
+
   const pickupTimeCopy={
     en:{title:"HOTEL PICKUP TIME",text:"Your hotel pickup time will be arranged according to your flight code and confirmed with you."},
     es:{title:"HORA DE RECOGIDA EN EL HOTEL",text:"La hora de recogida en su hotel se organizará según su código de vuelo y se le confirmará."},
@@ -91,6 +109,19 @@
     const tripType=qs("#trip-type",full);
     const direction=full.elements.direction;
     const returnFields=qs("#return-fields",full);
+    const transferDateInput=full?.elements?.["date"] || null;
+    const returnDateInput=full?.elements?.["return_date"] || null;
+    let sameDayReturnEl=null;
+    if(returnDateInput){
+      sameDayReturnEl=document.createElement("div");
+      sameDayReturnEl.className="same-day-return-warning";
+      sameDayReturnEl.setAttribute("role","alert");
+      sameDayReturnEl.hidden=true;
+      sameDayReturnEl.textContent=sameDayReturnWarning;
+      sameDayReturnEl.style.cssText="margin-top:6px;color:#c62828;font-size:.88rem;font-weight:700;line-height:1.35;";
+      returnDateInput.insertAdjacentElement("afterend",sameDayReturnEl);
+    }
+
     const flightTimeInput=full.elements.flight_time;
     const flightTimeField=flightTimeInput ? flightTimeInput.closest(".field") : null;
     const pickupTimeNotice=document.createElement("div");
@@ -160,6 +191,44 @@
       pickupTimeNotice.style.display=hotelToAirport ? "" : "none";
     }
 
+    function syncReturnDate(){
+      if(!transferDateInput || !returnDateInput) return true;
+
+      const outbound=transferDateInput.value || "";
+      const ret=returnDateInput.value || "";
+
+      if(outbound){
+        // Native date pickers will disable every date before the transfer date.
+        returnDateInput.min=outbound;
+
+        // If the transfer date is moved forward after a return date was already chosen,
+        // remove the now-invalid return date instead of leaving an impossible selection.
+        if(ret && ret < outbound){
+          returnDateInput.value="";
+          returnDateInput.setCustomValidity("");
+          if(sameDayReturnEl) sameDayReturnEl.hidden=true;
+          return true;
+        }
+      }else{
+        returnDateInput.removeAttribute("min");
+      }
+
+      returnDateInput.setCustomValidity("");
+      if(sameDayReturnEl) sameDayReturnEl.hidden=true;
+
+      const currentReturn=returnDateInput.value || "";
+      if(!outbound || !currentReturn) return true;
+
+      if(currentReturn === outbound){
+        if(sameDayReturnEl){
+          sameDayReturnEl.textContent=sameDayReturnWarning;
+          sameDayReturnEl.hidden=false;
+        }
+      }
+
+      return true;
+    }
+
     function syncTripType(){
       const round=tripType && tripType.value==="Round Trip";
 
@@ -177,6 +246,7 @@
       });
 
       syncDirection();
+      syncReturnDate();
     }
     if(direction) direction.addEventListener("change",syncDirection);
     if(tripType){ tripType.addEventListener("change",syncTripType); syncTripType(); }
@@ -255,6 +325,10 @@
       return lines.join("\\n");
     }
 
+    if(transferDateInput) transferDateInput.addEventListener("change",syncReturnDate);
+    if(returnDateInput) returnDateInput.addEventListener("change",syncReturnDate);
+    syncReturnDate();
+
     function bookingPayload(){
       const d=new FormData(full);
       const count=Math.max(1,Math.min(16,parseInt(d.get("passengers")||"1",10)));
@@ -284,6 +358,13 @@
     full.addEventListener("submit",async e=>{
       e.preventDefault();
       if(!full.reportValidity()) return;
+      if(!syncReturnDate()){
+        if(returnDateInput){
+          returnDateInput.reportValidity();
+          returnDateInput.focus();
+        }
+        return;
+      }
       const payload=bookingPayload();
       if(payload.service==="vito" && payload.passengerCount>5){
         full.elements.passengers.setCustomValidity("Private Vito is available for up to 5 passengers.");
