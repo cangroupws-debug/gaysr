@@ -735,7 +735,7 @@ module.exports = async function handler(req,res){
         body:JSON.stringify({
           from,
           to:[to],
-          subject:`Yeni rezervasyon · ${id} · ${destination.mail} · ${service.label}`,
+          subject:`[${id}] · ${passengers[0]?.name || "Passenger"} ${tripType==="round_trip" ? `ASR ⇄ ${destination.mail}` : (directionKey==="from_airport" ? `ASR → ${destination.mail}` : `${destination.mail} → ASR`)} · ${service.label}`,
           html,
           text
         })
