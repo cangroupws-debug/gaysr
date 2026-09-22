@@ -599,7 +599,7 @@ module.exports = async function handler(req,res){
 
   console.log("BOOKING_RECEIVED",{
     bookingId:id,
-    locale,
+    language,
     direction:directionKey,
     destination:destination.mail,
     hasResendApiKey:!!apiKey,
