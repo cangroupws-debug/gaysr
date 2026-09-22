@@ -486,9 +486,36 @@ function plainLine(label,value){ return `${label}: ${stripHtml(value)}`; }
 
 module.exports = async function handler(req,res){
   res.setHeader("Cache-Control","no-store");
+
+  const apiKeyConfigured=!!(process.env.RESEND_API_KEY || "");
+  const recipientConfigured=!!(process.env.BOOKING_TO_EMAIL || process.env.RESEND_TO_EMAIL || "");
+
+  if(req.method === "GET"){
+    return res.status(200).json({
+      ok:true,
+      endpoint:"booking",
+      build:"v10",
+      resendApiKeyConfigured:apiKeyConfigured,
+      bookingRecipientConfigured:recipientConfigured,
+      customFromConfigured:!!(process.env.RESEND_FROM_EMAIL || "")
+    });
+  }
+
   if(req.method !== "POST") return res.status(405).json({error:"method_not_allowed"});
+
   const body = typeof req.body === "string" ? (()=>{try{return JSON.parse(req.body)}catch{return {}}})() : (req.body || {});
-  if(clean(body.website,100)) return res.status(200).json({ok:true});
+
+  console.log("BOOKING_POST_RECEIVED",{
+    build:"v10",
+    hasResendApiKey:apiKeyConfigured,
+    hasBookingRecipient:recipientConfigured
+  });
+
+  // Do not silently discard a real customer's booking because a browser/password manager
+  // happened to fill a honeypot field. WhatsApp + server validation already protect the flow.
+  if(clean(body.website,100)){
+    console.warn("BOOKING_HONEYPOT_FILLED_BUT_CONTINUING",{build:"v10"});
+  }
 
   const language = LANGS.has(clean(body.language,20)) ? clean(body.language,20) : "en";
   const l=L10N[language] || L10N.en;
@@ -510,13 +537,28 @@ module.exports = async function handler(req,res){
   if(!/^\d{4}-\d{2}-\d{2}$/.test(date)) errors.push("date");
   if(directionKey==="from_airport" && !/^\d{2}:\d{2}$/.test(flightTime)) errors.push("flight_time");
   if(tripType==="round_trip" && !/^\d{2}:\d{2}$/.test(flightTime)) errors.push("flight_time");
-  if(!/^[A-Z0-9]{2,12}$/.test(flight)) errors.push("flight");
+  if(flight.length<2 || flight.length>30) errors.push("flight");
   if(hotel.length<2) errors.push("hotel");
   if(contactWhatsApp.length<7 || contactWhatsApp.length>15) errors.push("contact_whatsapp");
   if(passengers.length!==passengerCount || passengers.some(p=>!p.name)) errors.push("passengers");
-  if(tripType==="round_trip" && (!/^\d{4}-\d{2}-\d{2}$/.test(returnDate) || !/^[A-Z0-9]{2,12}$/.test(returnFlight))) errors.push("return");
+  if(tripType==="round_trip" && (!/^\d{4}-\d{2}-\d{2}$/.test(returnDate) || returnFlight.length<2 || returnFlight.length>30)) errors.push("return");
   if(service?.max && passengerCount>service.max) errors.push("capacity");
-  if(errors.length) return res.status(400).json({error:"invalid_booking_data",fields:errors,message:"Please check the booking details and try again."});
+  if(errors.length){
+    console.error("BOOKING_VALIDATION_FAILED",{
+      build:"v10",
+      fields:errors,
+      service:serviceKey,
+      direction:directionKey,
+      destination:clean(body.destination,60),
+      passengerCount
+    });
+    return res.status(400).json({
+      error:"invalid_booking_data",
+      fields:errors,
+      message:"Please check the booking details and try again.",
+      build:"v10"
+    });
+  }
 
   // The browser creates a fresh ID on every submit so WhatsApp can still work if email/API delivery fails.
   // If an older client does not send one, generate it here as a fallback.
@@ -598,6 +640,7 @@ module.exports = async function handler(req,res){
   let emailOk=false, emailId=null, emailStatus="not_attempted";
 
   console.log("BOOKING_RECEIVED",{
+    build:"v10",
     bookingId:id,
     language,
     direction:directionKey,

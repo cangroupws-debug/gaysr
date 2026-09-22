@@ -277,7 +277,7 @@
         contactWhatsApp:d.get("contact_whatsapp"),
         notes:d.get("notes")||"",
         passengers,
-        website:d.get("website")||""
+        website:""
       };
     }
 
@@ -307,6 +307,13 @@
           body:JSON.stringify(payload)
         });
         const result=await response.json().catch(()=>({}));
+        console.info("BOOKING_API_RESULT",{
+          status:response.status,
+          ok:response.ok,
+          build:result.build || null,
+          emailStatus:result.emailStatus || null,
+          fields:result.fields || null
+        });
         if(typeof result.whatsappMessage==="string" && result.whatsappMessage.trim()){
           whatsappMessage=result.whatsappMessage;
         }
