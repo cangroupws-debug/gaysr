@@ -55,8 +55,8 @@
 <div class="field">
 <label>이동 방향</label>
 <select name="direction" required="">
-<option value="from_airport">카이세리 공항 → 카파도키아</option>
-<option value="to_airport">카파도키아 → 카이세리 공항</option>
+<option value="from_airport">카이세리 공항에서 출발</option>
+<option value="to_airport">카이세리 공항으로 이동</option>
 </select>
 </div>
 <div class="field">
@@ -77,11 +77,11 @@
 </div>
 <div class="field">
 <label>항공편 번호</label>
-<input name="flight" placeholder="예: TK2010" required=""/>
-</div><div class="field"><label>항공편 시간</label><input name="flight_time" placeholder="예: 20:40" required="" type="time"/></div>
+<input name="flight" placeholder="e.g. TK2010" required=""/>
+</div><div class="field"><label>항공편 시간</label><input name="flight_time" placeholder="e.g. 20:40" required="" type="time"/></div>
 <div class="field full">
 <label>호텔 / 숙소</label>
-<input name="hotel" placeholder="호텔 또는 숙소의 전체 이름" required=""/>
+<input name="hotel" placeholder="Full hotel or property name" required=""/>
 </div>
 <div class="field full" hidden="" id="return-fields">
 <div class="fields"><div class="field"><label>귀국편 날짜</label><input name="return_date" type="date"/></div><div class="field"><label>귀국편 항공편 번호</label><input name="return_flight" placeholder="e.g. TK2011"/></div></div>
@@ -96,10 +96,10 @@
 <option value="13">13</option><option value="14">14</option><option value="15">15</option>
 <option value="16">16</option>
 </select>
-</div><div class="field"><label>연락용 WhatsApp</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="국가번호를 포함한 전화번호 (예: 447957940844)" required="" type="tel"/></div>
+</div><div class="field"><label>연락용 WhatsApp</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="Country code + number, e.g. 447957940844" required="" type="tel"/></div>
 <div class="field">
 <label>결제</label>
-<input aria-readonly="true" readonly="" value="기사님께 현금 결제 — EUR / USD / TRY"/>
+<input aria-readonly="true" readonly="" value="Cash to driver — EUR / USD / TRY"/>
 </div>
 <div class="field full">
 <div class="notice">결제는 기사님께 현금으로 합니다. EUR, USD, TRY를 사용할 수 있으며 카드 결제는 지원되지 않습니다. 트랜스퍼 24시간 전까지 무료 취소가 가능합니다.</div>

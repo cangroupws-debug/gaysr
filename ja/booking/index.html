@@ -55,8 +55,8 @@
 <div class="field">
 <label>送迎方向</label>
 <select name="direction" required="">
-<option value="from_airport">カイセリ空港からカッパドキアへ</option>
-<option value="to_airport">カッパドキアからカイセリ空港へ</option>
+<option value="from_airport">カイセリ空港から</option>
+<option value="to_airport">カイセリ空港へ</option>
 </select>
 </div>
 <div class="field">
@@ -77,11 +77,11 @@
 </div>
 <div class="field">
 <label>便名</label>
-<input name="flight" placeholder="例：TK2010" required=""/>
-</div><div class="field"><label>フライト時刻</label><input name="flight_time" placeholder="例：20:40" required="" type="time"/></div>
+<input name="flight" placeholder="e.g. TK2010" required=""/>
+</div><div class="field"><label>フライト時刻</label><input name="flight_time" placeholder="e.g. 20:40" required="" type="time"/></div>
 <div class="field full">
 <label>ホテル / 宿泊施設</label>
-<input name="hotel" placeholder="ホテルまたは宿泊施設の正式名称" required=""/>
+<input name="hotel" placeholder="Full hotel or property name" required=""/>
 </div>
 <div class="field full" hidden="" id="return-fields">
 <div class="fields"><div class="field"><label>復路日</label><input name="return_date" type="date"/></div><div class="field"><label>復路便名</label><input name="return_flight" placeholder="e.g. TK2011"/></div></div>
@@ -96,10 +96,10 @@
 <option value="13">13</option><option value="14">14</option><option value="15">15</option>
 <option value="16">16</option>
 </select>
-</div><div class="field"><label>連絡先 WhatsApp</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="国番号を含む電話番号（例：447957940844）" required="" type="tel"/></div>
+</div><div class="field"><label>連絡先 WhatsApp</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="Country code + number, e.g. 447957940844" required="" type="tel"/></div>
 <div class="field">
 <label>支払い</label>
-<input aria-readonly="true" readonly="" value="ドライバーへ現金払い — EUR / USD / TRY"/>
+<input aria-readonly="true" readonly="" value="Cash to driver — EUR / USD / TRY"/>
 </div>
 <div class="field full">
 <div class="notice">お支払いはドライバーへ現金で行います。EUR、USD、TRYを利用でき、カード決済には対応していません。送迎24時間前まで無料でキャンセルできます。</div>
