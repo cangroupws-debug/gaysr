@@ -41,12 +41,12 @@
 </div><form class="booking-card" data-email-integration="resend" id="full-booking" style="margin-top:20px">
 <div class="fields">
 <div class="field full">
-<label>JENIS PERJALANAN</label>
+<label for="trip-type">JENIS PERJALANAN</label>
 <select id="trip-type" name="trip_type" required=""><option value="One Way">Sehala</option><option value="Round Trip">Pergi balik</option></select>
 </div>
 <div class="field full">
-<label>JENIS TRANSFER</label>
-<select name="service" required="">
+<label for="booking-service">JENIS TRANSFER</label>
+<select id="booking-service" name="service" required="">
 <option value="">Pilih jenis transfer</option>
 <option value="shared">Shuttle berkongsi — €15 seorang</option>
 <option value="vito">Vito persendirian — €90 sehala (maks. 5 penumpang)</option>
@@ -54,15 +54,15 @@
 </select>
 </div>
 <div class="field">
-<label>ARAH PERJALANAN</label>
-<select name="direction" required="">
+<label for="booking-direction">ARAH PERJALANAN</label>
+<select id="booking-direction" name="direction" required="">
 <option value="from_airport">Dari Lapangan Terbang Kayseri ke Cappadocia</option>
 <option value="to_airport">Dari Cappadocia ke Lapangan Terbang Kayseri</option>
 </select>
 </div>
 <div class="field">
-<label>DESTINASI</label>
-<select name="destination" required="">
+<label for="booking-destination">DESTINASI</label>
+<select id="booking-destination" name="destination" required="">
 <option value="">Pilih destinasi</option>
 <option value="Göreme">Göreme</option>
 <option value="Ürgüp">Ürgüp</option>
@@ -73,22 +73,22 @@
 </select>
 </div>
 <div class="field">
-<label>TARIKH TRANSFER</label>
-<input name="date" required="" type="date"/>
+<label for="booking-date">TARIKH TRANSFER</label>
+<input id="booking-date" name="date" required="" type="date"/>
 </div>
 <div class="field">
-<label>KOD PENERBANGAN</label>
-<input name="flight" placeholder="cth. TK2010" required=""/>
-</div><div class="field"><label>MASA PENERBANGAN</label><input name="flight_time" placeholder="cth. 20:40" required="" type="time"/></div>
+<label for="booking-flight">KOD PENERBANGAN</label>
+<input id="booking-flight" name="flight" placeholder="cth. TK2010" required=""/>
+</div><div class="field"><label for="booking-flight_time">MASA PENERBANGAN</label><input id="booking-flight_time" name="flight_time" placeholder="cth. 20:40" required="" type="time"/></div>
 <div class="field full">
-<label>HOTEL / PENGINAPAN</label>
-<input name="hotel" placeholder="Nama penuh hotel atau penginapan" required=""/>
+<label for="booking-hotel">HOTEL / PENGINAPAN</label>
+<input id="booking-hotel" name="hotel" placeholder="Nama penuh hotel atau penginapan" required=""/>
 </div>
 <div class="field full" hidden="" id="return-fields">
-<div class="fields"><div class="field"><label>TARIKH PULANG</label><input name="return_date" type="date"/></div><div class="field"><label>KOD PENERBANGAN PULANG</label><input name="return_flight" placeholder="e.g. TK2011"/></div></div>
+<div class="fields"><div class="field"><label for="booking-return_date">TARIKH PULANG</label><input id="booking-return_date" name="return_date" type="date"/></div><div class="field"><label for="booking-return_flight">KOD PENERBANGAN PULANG</label><input id="booking-return_flight" name="return_flight" placeholder="e.g. TK2011"/></div></div>
 </div>
 <div class="field">
-<label>PENUMPANG</label>
+<label for="passengers">PENUMPANG</label>
 <select id="passengers" name="passengers" required="">
 <option value="1">1</option><option value="2">2</option><option value="3">3</option>
 <option value="4">4</option><option value="5">5</option><option value="6">6</option>
@@ -97,10 +97,10 @@
 <option value="13">13</option><option value="14">14</option><option value="15">15</option>
 <option value="16">16</option>
 </select>
-</div><div class="field"><label>WHATSAPP UNTUK DIHUBUNGI</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="Kod negara + nombor, contohnya 447957940844" required="" type="tel"/></div>
+</div><div class="field"><label for="booking-contact_whatsapp">WHATSAPP UNTUK DIHUBUNGI</label><input id="booking-contact_whatsapp" autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="Kod negara + nombor, contohnya 447957940844" required="" type="tel"/></div>
 <div class="field">
-<label>BAYARAN</label>
-<input aria-readonly="true" readonly="" value="Tunai kepada pemandu — EUR / USD / TRY"/>
+<label for="booking-payment">BAYARAN</label>
+<input id="booking-payment" aria-readonly="true" readonly="" value="Tunai kepada pemandu — EUR / USD / TRY"/>
 </div>
 <div class="field full">
 <div class="notice">Bayaran dibuat secara tunai kepada pemandu. EUR, USD dan TRY diterima. Kad tidak diterima. Pembatalan percuma sehingga 24 jam sebelum transfer.</div>
@@ -111,8 +111,8 @@
 <div class="notice"><strong>Butiran penumpang</strong><br/>Maklumat pasport hanya diminta pada peringkat ini kerana diperlukan untuk proses tempahan dan pelaporan transfer lapangan terbang di Türkiye.</div>
 <div id="passenger-fields"></div>
 <div class="field" style="margin-top:12px">
-<label>CATATAN (PILIHAN)</label>
-<textarea name="notes" placeholder="Arrival notes or another important detail"></textarea>
+<label for="booking-notes">CATATAN (PILIHAN)</label>
+<textarea id="booking-notes" name="notes" placeholder="Arrival notes or another important detail"></textarea>
 </div>
 <div aria-hidden="true" hidden=""><label>Website<input autocomplete="off" name="website" tabindex="-1"/></label></div><button class="primary" style="width:100%;margin-top:14px" type="submit">Hantar permintaan melalui E-mel &amp; WhatsApp →</button>
 </div>

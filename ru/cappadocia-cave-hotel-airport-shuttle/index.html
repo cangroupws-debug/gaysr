@@ -53,10 +53,10 @@
 <aside class="sidebar"><form class="booking-card quick-form">
 <h2>Забронировать трансфер</h2><div class="hint">Отправьте данные бронирования за несколько простых шагов.</div>
 <div class="fields">
-<div class="field full"><label>Направление трансфера</label><select name="direction"><option value="from_airport">Из аэропорта Кайсери в Каппадокию</option><option value="to_airport">Из Каппадокии в аэропорт Кайсери</option></select></div>
-<div class="field full"><label>Пункт назначения</label><select name="destination" required=""><option value="">Выберите пункт назначения</option><option value="Göreme">Göreme</option><option value="Ürgüp">Ürgüp</option><option value="Uçhisar">Uçhisar</option><option value="Avanos">Avanos</option><option value="Çavuşin">Çavuşin</option><option value="Ortahisar">Ortahisar</option></select></div>
-<div class="field"><label>Дата трансфера</label><input name="date" required="" type="date"/></div>
-<div class="field"><label>Пассажиры</label><input max="16" name="passengers" required="" type="number" value="1" мин="1"/></div>
+<div class="field full"><label for="quick-direction">Направление трансфера</label><select id="quick-direction" name="direction"><option value="from_airport">Из аэропорта Кайсери в Каппадокию</option><option value="to_airport">Из Каппадокии в аэропорт Кайсери</option></select></div>
+<div class="field full"><label for="quick-destination">Пункт назначения</label><select id="quick-destination" name="destination" required=""><option value="">Выберите пункт назначения</option><option value="Göreme">Göreme</option><option value="Ürgüp">Ürgüp</option><option value="Uçhisar">Uçhisar</option><option value="Avanos">Avanos</option><option value="Çavuşin">Çavuşin</option><option value="Ortahisar">Ortahisar</option></select></div>
+<div class="field"><label for="quick-date">Дата трансфера</label><input id="quick-date" name="date" required="" type="date"/></div>
+<div class="field"><label for="quick-passengers">Пассажиры</label><input id="quick-passengers" max="16" name="passengers" required="" type="number" value="1" мин="1"/></div>
 <button class="primary field full" type="submit">Посмотреть варианты трансфера →</button>
 </div><div class="form-note">Номер рейса, отель и данные пассажиров вводятся на странице бронирования.</div>
 </form>

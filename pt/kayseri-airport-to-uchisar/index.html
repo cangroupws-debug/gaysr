@@ -70,10 +70,10 @@
 <form class="booking-card quick-form">
 <h2>Reserve seu transfer do aeroporto</h2><div class="hint">Envie os dados da sua reserva em alguns passos simples.</div>
 <div class="fields">
-<div class="field full"><label>DIREÇÃO DO TRANSFER</label><select name="direction"><option value="from_airport">Do Aeroporto de Kayseri para a Capadócia</option><option value="to_airport">Da Capadócia para o Aeroporto de Kayseri</option></select></div>
-<div class="field full"><label>DESTINO</label><select name="destination" required=""><option value="">Selecione o destino</option><option value="Göreme">Göreme</option><option value="Ürgüp">Ürgüp</option><option selected="" value="Uçhisar">Uçhisar</option><option value="Avanos">Avanos</option><option value="Çavuşin">Çavuşin</option><option value="Ortahisar">Ortahisar</option></select></div>
-<div class="field"><label>DATA DO TRANSFER</label><input name="date" required="" type="date"/></div>
-<div class="field"><label>PASSAGEIROS</label><input max="16" min="1" name="passengers" required="" type="number" value="1"/></div>
+<div class="field full"><label for="quick-direction">DIREÇÃO DO TRANSFER</label><select id="quick-direction" name="direction"><option value="from_airport">Do Aeroporto de Kayseri para a Capadócia</option><option value="to_airport">Da Capadócia para o Aeroporto de Kayseri</option></select></div>
+<div class="field full"><label for="quick-destination">DESTINO</label><select id="quick-destination" name="destination" required=""><option value="">Selecione o destino</option><option value="Göreme">Göreme</option><option value="Ürgüp">Ürgüp</option><option selected="" value="Uçhisar">Uçhisar</option><option value="Avanos">Avanos</option><option value="Çavuşin">Çavuşin</option><option value="Ortahisar">Ortahisar</option></select></div>
+<div class="field"><label for="quick-date">DATA DO TRANSFER</label><input id="quick-date" name="date" required="" type="date"/></div>
+<div class="field"><label for="quick-passengers">PASSAGEIROS</label><input id="quick-passengers" max="16" min="1" name="passengers" required="" type="number" value="1"/></div>
 <button class="primary field full" type="submit">Ver opções de transfer →</button>
 </div><div class="form-note">O número do voo, o hotel e os dados dos passageiros são informados na página de reserva.</div>
 </form>

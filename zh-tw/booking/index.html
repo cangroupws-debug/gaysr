@@ -41,12 +41,12 @@
 </div><form class="booking-card" data-email-integration="resend" id="full-booking" style="margin-top:20px">
 <div class="fields">
 <div class="field full">
-<label>行程類型</label>
+<label for="trip-type">行程類型</label>
 <select id="trip-type" name="trip_type" required=""><option value="One Way">單程</option><option value="Round Trip">往返</option></select>
 </div>
 <div class="field full">
-<label>接送類型</label>
-<select name="service" required="">
+<label for="booking-service">接送類型</label>
+<select id="booking-service" name="service" required="">
 <option value="">選擇接送類型</option>
 <option value="shared">共乘接送 — €15/人</option>
 <option value="vito">私人 Vito — €90/程（最多5人）</option>
@@ -54,15 +54,15 @@
 </select>
 </div>
 <div class="field">
-<label>接送方向</label>
-<select name="direction" required="">
+<label for="booking-direction">接送方向</label>
+<select id="booking-direction" name="direction" required="">
 <option value="from_airport">從開塞利機場前往卡帕多奇亞</option>
 <option value="to_airport">從卡帕多奇亞前往開塞利機場</option>
 </select>
 </div>
 <div class="field">
-<label>目的地</label>
-<select name="destination" required="">
+<label for="booking-destination">目的地</label>
+<select id="booking-destination" name="destination" required="">
 <option value="">選擇目的地</option>
 <option value="Göreme">Göreme</option>
 <option value="Ürgüp">Ürgüp</option>
@@ -73,22 +73,22 @@
 </select>
 </div>
 <div class="field">
-<label>接送日期</label>
-<input name="date" required="" type="date"/>
+<label for="booking-date">接送日期</label>
+<input id="booking-date" name="date" required="" type="date"/>
 </div>
 <div class="field">
-<label>航班號</label>
-<input name="flight" placeholder="例如 TK2010" required=""/>
-</div><div class="field"><label>航班時間</label><input name="flight_time" placeholder="例如 20:40" required="" type="time"/></div>
+<label for="booking-flight">航班號</label>
+<input id="booking-flight" name="flight" placeholder="例如 TK2010" required=""/>
+</div><div class="field"><label for="booking-flight_time">航班時間</label><input id="booking-flight_time" name="flight_time" placeholder="例如 20:40" required="" type="time"/></div>
 <div class="field full">
-<label>飯店 / 住宿</label>
-<input name="hotel" placeholder="飯店或住宿的完整名稱" required=""/>
+<label for="booking-hotel">飯店 / 住宿</label>
+<input id="booking-hotel" name="hotel" placeholder="飯店或住宿的完整名稱" required=""/>
 </div>
 <div class="field full" hidden="" id="return-fields">
-<div class="fields"><div class="field"><label>返程日期</label><input name="return_date" type="date"/></div><div class="field"><label>返程航班號</label><input name="return_flight" placeholder="例如 TK2011"/></div></div>
+<div class="fields"><div class="field"><label for="booking-return_date">返程日期</label><input id="booking-return_date" name="return_date" type="date"/></div><div class="field"><label for="booking-return_flight">返程航班號</label><input id="booking-return_flight" name="return_flight" placeholder="例如 TK2011"/></div></div>
 </div>
 <div class="field">
-<label>乘客人數</label>
+<label for="passengers">乘客人數</label>
 <select id="passengers" name="passengers" required="">
 <option value="1">1</option><option value="2">2</option><option value="3">3</option>
 <option value="4">4</option><option value="5">5</option><option value="6">6</option>
@@ -97,10 +97,10 @@
 <option value="13">13</option><option value="14">14</option><option value="15">15</option>
 <option value="16">16</option>
 </select>
-</div><div class="field"><label>聯絡 WhatsApp</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="國家代碼 + 手機號，例如 447957940844" required="" type="tel"/></div>
+</div><div class="field"><label for="booking-contact_whatsapp">聯絡 WhatsApp</label><input id="booking-contact_whatsapp" autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="國家代碼 + 手機號，例如 447957940844" required="" type="tel"/></div>
 <div class="field">
-<label>付款</label>
-<input aria-readonly="true" readonly="" value="向司機現金付款 — EUR / USD / TRY"/>
+<label for="booking-payment">付款</label>
+<input id="booking-payment" aria-readonly="true" readonly="" value="向司機現金付款 — EUR / USD / TRY"/>
 </div>
 <div class="field full">
 <div class="notice">費用以現金支付給司機，可使用 EUR、USD 或 TRY，不接受信用卡。接送前24小時以上可免費取消。</div>
@@ -111,8 +111,8 @@
 <div class="notice"><strong>乘客資訊</strong><br/>護照資訊僅在此步驟填寫，因為 土耳其 的預訂及機場接送申報需要這些資訊。</div>
 <div id="passenger-fields"></div>
 <div class="field" style="margin-top:12px">
-<label>備註（可選）</label>
-<textarea name="notes" placeholder="抵達說明或其他重要資訊"></textarea>
+<label for="booking-notes">備註（可選）</label>
+<textarea id="booking-notes" name="notes" placeholder="抵達說明或其他重要資訊"></textarea>
 </div>
 <div aria-hidden="true" hidden=""><label>網站<input autocomplete="off" name="website" tabindex="-1"/></label></div><button class="primary" style="width:100%;margin-top:14px" type="submit">通過郵件和 WhatsApp 傳送預訂申請 →</button>
 </div>

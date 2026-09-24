@@ -85,6 +85,50 @@
     });
   });
 
+  function showWhatsAppFallback(form,url){
+    let wrap=form.querySelector(".whatsapp-popup-fallback");
+    if(!wrap){
+      wrap=document.createElement("div");
+      wrap.className="whatsapp-popup-fallback";
+      wrap.setAttribute("role","status");
+      wrap.style.cssText="margin-top:12px;text-align:center";
+      const link=document.createElement("a");
+      link.className="primary";
+      link.target="_blank";
+      link.rel="noopener";
+      link.textContent="WhatsApp ↗";
+      link.style.cssText="display:inline-block;text-decoration:none";
+      wrap.appendChild(link);
+      form.appendChild(wrap);
+    }
+    const link=wrap.querySelector("a");
+    link.href=url;
+    wrap.hidden=false;
+    link.focus();
+    return link;
+  }
+
+  function prepareWhatsAppTab(){
+    const tab=window.open("about:blank","_blank");
+    if(!tab) return null;
+    try{
+      tab.document.title="WhatsApp";
+      tab.opener=null;
+    }catch(_err){}
+    return tab;
+  }
+
+  function sendWhatsAppToNewTab(tab,url,form){
+    if(tab && !tab.closed){
+      try{
+        tab.location.replace(url);
+        return true;
+      }catch(_err){}
+    }
+    showWhatsAppFallback(form,url);
+    return false;
+  }
+
   // The compact booking page uses a static form without the progressive passenger step.
   // Keep that form functional and send its localized values to the same WhatsApp team.
   qsa(".full-booking form").filter(form=>!form.closest("#full-booking")).forEach(form=>{
@@ -97,7 +141,9 @@
         if(label) rows.push(`${label}: ${el.value}`);
       });
       const text=`${c.booking}\n\n${rows.join("\n")}\n\n${c.confirm}`;
-      location.href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+      const whatsappUrl=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+      const whatsappTab=prepareWhatsAppTab();
+      sendWhatsAppToNewTab(whatsappTab,whatsappUrl,form);
     });
   });
 
@@ -164,8 +210,8 @@
           <div class="passenger-block">
             <h3>${c.passenger} ${i}</h3>
             <div class="fields">
-              <div class="field"><label>${c.fullName}</label><input name="passenger_name_${i}" maxlength="100" autocomplete="name" required></div>
-              <div class="field"><label>${c.passportLabel}</label><input name="passport_${i}" maxlength="50" autocomplete="off"></div>
+              <div class="field"><label for="passenger-name-${i}">${c.fullName}</label><input id="passenger-name-${i}" name="passenger_name_${i}" maxlength="100" autocomplete="name" required></div>
+              <div class="field"><label for="passenger-passport-${i}">${c.passportLabel}</label><input id="passenger-passport-${i}" name="passport_${i}" maxlength="50" autocomplete="off"></div>
             </div>
           </div>`);
       }
@@ -322,7 +368,7 @@
       if(payload.notes) lines.push(`${c.notes}: ${payload.notes}`);
       lines.push("");
       lines.push(c.confirm);
-      return lines.join("\\n");
+      return lines.join("\n");
     }
 
     if(transferDateInput) transferDateInput.addEventListener("change",syncReturnDate);
@@ -372,6 +418,8 @@
         full.elements.passengers.setCustomValidity("");
         return;
       }
+      const whatsappTab=prepareWhatsAppTab();
+
       if(submitBtn){
         submitBtn.disabled=true;
         submitBtn.dataset.originalLabel=submitLabel;
@@ -407,7 +455,8 @@
         }
       }
 
-      location.href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+      const whatsappUrl=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+      sendWhatsAppToNewTab(whatsappTab,whatsappUrl,full);
     });
 
     // When the customer returns from WhatsApp with the browser Back button,

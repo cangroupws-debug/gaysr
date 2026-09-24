@@ -41,12 +41,12 @@
 </div><form class="booking-card" data-email-integration="resend" id="full-booking" style="margin-top:20px">
 <div class="fields">
 <div class="field full">
-<label>여행 유형</label>
+<label for="trip-type">여행 유형</label>
 <select id="trip-type" name="trip_type" required=""><option value="One Way">편도</option><option value="Round Trip">왕복</option></select>
 </div>
 <div class="field full">
-<label>트랜스퍼 옵션</label>
-<select name="service" required="">
+<label for="booking-service">트랜스퍼 옵션</label>
+<select id="booking-service" name="service" required="">
 <option value="">트랜스퍼 옵션 선택</option>
 <option value="shared">공용 셔틀 — 1인 €15</option>
 <option value="vito">프라이빗 Vito — 편도 €90 (최대 5명)</option>
@@ -54,15 +54,15 @@
 </select>
 </div>
 <div class="field">
-<label>이동 방향</label>
-<select name="direction" required="">
+<label for="booking-direction">이동 방향</label>
+<select id="booking-direction" name="direction" required="">
 <option value="from_airport">카이세리 공항 → 카파도키아</option>
 <option value="to_airport">카파도키아 → 카이세리 공항</option>
 </select>
 </div>
 <div class="field">
-<label>목적지</label>
-<select name="destination" required="">
+<label for="booking-destination">목적지</label>
+<select id="booking-destination" name="destination" required="">
 <option value="">목적지 선택</option>
 <option value="Göreme">Göreme</option>
 <option value="Ürgüp">Ürgüp</option>
@@ -73,22 +73,22 @@
 </select>
 </div>
 <div class="field">
-<label>이동 날짜</label>
-<input name="date" required="" type="date"/>
+<label for="booking-date">이동 날짜</label>
+<input id="booking-date" name="date" required="" type="date"/>
 </div>
 <div class="field">
-<label>항공편 번호</label>
-<input name="flight" placeholder="예: TK2010" required=""/>
-</div><div class="field"><label>항공편 시간</label><input name="flight_time" placeholder="예: 20:40" required="" type="time"/></div>
+<label for="booking-flight">항공편 번호</label>
+<input id="booking-flight" name="flight" placeholder="예: TK2010" required=""/>
+</div><div class="field"><label for="booking-flight_time">항공편 시간</label><input id="booking-flight_time" name="flight_time" placeholder="예: 20:40" required="" type="time"/></div>
 <div class="field full">
-<label>호텔 / 숙소</label>
-<input name="hotel" placeholder="호텔 또는 숙소의 전체 이름" required=""/>
+<label for="booking-hotel">호텔 / 숙소</label>
+<input id="booking-hotel" name="hotel" placeholder="호텔 또는 숙소의 전체 이름" required=""/>
 </div>
 <div class="field full" hidden="" id="return-fields">
-<div class="fields"><div class="field"><label>귀국편 날짜</label><input name="return_date" type="date"/></div><div class="field"><label>귀국편 항공편 번호</label><input name="return_flight" placeholder="e.g. TK2011"/></div></div>
+<div class="fields"><div class="field"><label for="booking-return_date">귀국편 날짜</label><input id="booking-return_date" name="return_date" type="date"/></div><div class="field"><label for="booking-return_flight">귀국편 항공편 번호</label><input id="booking-return_flight" name="return_flight" placeholder="e.g. TK2011"/></div></div>
 </div>
 <div class="field">
-<label>승객 수</label>
+<label for="passengers">승객 수</label>
 <select id="passengers" name="passengers" required="">
 <option value="1">1</option><option value="2">2</option><option value="3">3</option>
 <option value="4">4</option><option value="5">5</option><option value="6">6</option>
@@ -97,10 +97,10 @@
 <option value="13">13</option><option value="14">14</option><option value="15">15</option>
 <option value="16">16</option>
 </select>
-</div><div class="field"><label>연락용 WhatsApp</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="국가번호를 포함한 전화번호 (예: 447957940844)" required="" type="tel"/></div>
+</div><div class="field"><label for="booking-contact_whatsapp">연락용 WhatsApp</label><input id="booking-contact_whatsapp" autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="국가번호를 포함한 전화번호 (예: 447957940844)" required="" type="tel"/></div>
 <div class="field">
-<label>결제</label>
-<input aria-readonly="true" readonly="" value="기사님께 현금 결제 — EUR / USD / TRY"/>
+<label for="booking-payment">결제</label>
+<input id="booking-payment" aria-readonly="true" readonly="" value="기사님께 현금 결제 — EUR / USD / TRY"/>
 </div>
 <div class="field full">
 <div class="notice">결제는 기사님께 현금으로 합니다. EUR, USD, TRY를 사용할 수 있으며 카드 결제는 지원되지 않습니다. 트랜스퍼 24시간 전까지 무료 취소가 가능합니다.</div>
@@ -111,8 +111,8 @@
 <div class="notice"><strong>승객 정보</strong><br/>여권 정보는 튀르키예의 예약 및 공항 트랜스퍼 신고 절차에 필요하므로 이 단계에서만 요청됩니다.</div>
 <div id="passenger-fields"></div>
 <div class="field" style="margin-top:12px">
-<label>메모 (선택 사항)</label>
-<textarea name="notes" placeholder="Arrival notes or another important detail"></textarea>
+<label for="booking-notes">메모 (선택 사항)</label>
+<textarea id="booking-notes" name="notes" placeholder="Arrival notes or another important detail"></textarea>
 </div>
 <div aria-hidden="true" hidden=""><label>웹사이트<input autocomplete="off" name="website" tabindex="-1"/></label></div><button class="primary" style="width:100%;margin-top:14px" type="submit">이메일 및 WhatsApp으로 예약 요청 보내기 →</button>
 </div>

@@ -41,12 +41,12 @@
 </div><form class="booking-card" data-email-integration="resend" id="full-booking" style="margin-top:20px">
 <div class="fields">
 <div class="field full">
-<label>TIPO DE VIAJE</label>
+<label for="trip-type">TIPO DE VIAJE</label>
 <select id="trip-type" name="trip_type" required=""><option value="One Way">Solo ida</option><option value="Round Trip">Ida y vuelta</option></select>
 </div>
 <div class="field full">
-<label>TIPO DE TRASLADO</label>
-<select name="service" required="">
+<label for="booking-service">TIPO DE TRASLADO</label>
+<select id="booking-service" name="service" required="">
 <option value="">Selecciona el tipo de traslado</option>
 <option value="shared">Traslado compartido — €15 por persona</option>
 <option value="vito">Vito privado — €90 por trayecto (hasta 5 pasajeros)</option>
@@ -54,15 +54,15 @@
 </select>
 </div>
 <div class="field">
-<label>DIRECCIÓN</label>
-<select name="direction" required="">
+<label for="booking-direction">DIRECCIÓN</label>
+<select id="booking-direction" name="direction" required="">
 <option value="from_airport">Del Aeropuerto de Kayseri a Capadocia</option>
 <option value="to_airport">De Capadocia al Aeropuerto de Kayseri</option>
 </select>
 </div>
 <div class="field">
-<label>DESTINO</label>
-<select name="destination" required="">
+<label for="booking-destination">DESTINO</label>
+<select id="booking-destination" name="destination" required="">
 <option value="">Selecciona destino</option>
 <option value="Göreme">Göreme</option>
 <option value="Ürgüp">Ürgüp</option>
@@ -73,22 +73,22 @@
 </select>
 </div>
 <div class="field">
-<label>FECHA DEL TRASLADO</label>
-<input name="date" required="" type="date"/>
+<label for="booking-date">FECHA DEL TRASLADO</label>
+<input id="booking-date" name="date" required="" type="date"/>
 </div>
 <div class="field">
-<label>CÓDIGO DE VUELO</label>
-<input name="flight" placeholder="p. ej. TK2010" required=""/>
-</div><div class="field"><label>HORA DEL VUELO</label><input name="flight_time" placeholder="p. ej. 20:40" required="" type="time"/></div>
+<label for="booking-flight">CÓDIGO DE VUELO</label>
+<input id="booking-flight" name="flight" placeholder="p. ej. TK2010" required=""/>
+</div><div class="field"><label for="booking-flight_time">HORA DEL VUELO</label><input id="booking-flight_time" name="flight_time" placeholder="p. ej. 20:40" required="" type="time"/></div>
 <div class="field full">
-<label>HOTEL / ALOJAMIENTO</label>
-<input name="hotel" placeholder="Nombre completo del hotel o alojamiento" required=""/>
+<label for="booking-hotel">HOTEL / ALOJAMIENTO</label>
+<input id="booking-hotel" name="hotel" placeholder="Nombre completo del hotel o alojamiento" required=""/>
 </div>
 <div class="field full" hidden="" id="return-fields">
-<div class="fields"><div class="field"><label>FECHA DE REGRESO</label><input name="return_date" type="date"/></div><div class="field"><label>CÓDIGO DEL VUELO DE REGRESO</label><input name="return_flight" placeholder="p. ej. TK2011"/></div></div>
+<div class="fields"><div class="field"><label for="booking-return_date">FECHA DE REGRESO</label><input id="booking-return_date" name="return_date" type="date"/></div><div class="field"><label for="booking-return_flight">CÓDIGO DEL VUELO DE REGRESO</label><input id="booking-return_flight" name="return_flight" placeholder="p. ej. TK2011"/></div></div>
 </div>
 <div class="field">
-<label>PASAJEROS</label>
+<label for="passengers">PASAJEROS</label>
 <select id="passengers" name="passengers" required="">
 <option value="1">1</option><option value="2">2</option><option value="3">3</option>
 <option value="4">4</option><option value="5">5</option><option value="6">6</option>
@@ -97,10 +97,10 @@
 <option value="13">13</option><option value="14">14</option><option value="15">15</option>
 <option value="16">16</option>
 </select>
-</div><div class="field"><label>WHATSAPP DE CONTACTO</label><input autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="Prefijo del país + número, p. ej. 447957940844" required="" type="tel"/></div>
+</div><div class="field"><label for="booking-contact_whatsapp">WHATSAPP DE CONTACTO</label><input id="booking-contact_whatsapp" autocomplete="tel" inputmode="tel" maxlength="30" name="contact_whatsapp" placeholder="Prefijo del país + número, p. ej. 447957940844" required="" type="tel"/></div>
 <div class="field">
-<label>PAGO</label>
-<input aria-readonly="true" readonly="" value="Efectivo al conductor — EUR / USD / TRY"/>
+<label for="booking-payment">PAGO</label>
+<input id="booking-payment" aria-readonly="true" readonly="" value="Efectivo al conductor — EUR / USD / TRY"/>
 </div>
 <div class="field full">
 <div class="notice">El pago se realiza en efectivo al conductor. Se aceptan EUR, USD y TRY. No se acepta tarjeta. La cancelación es gratuita hasta 24 horas antes del traslado.</div>
@@ -111,8 +111,8 @@
 <div class="notice"><strong>Datos de los pasajeros</strong><br/>Los datos del pasaporte se solicitan únicamente en este paso porque son necesarios para la reserva y el registro del traslado aeroportuario en Türkiye.</div>
 <div id="passenger-fields"></div>
 <div class="field" style="margin-top:12px">
-<label>NOTAS (OPCIONAL)</label>
-<textarea name="notes" placeholder="Notas de llegada u otro detalle importante"></textarea>
+<label for="booking-notes">NOTAS (OPCIONAL)</label>
+<textarea id="booking-notes" name="notes" placeholder="Notas de llegada u otro detalle importante"></textarea>
 </div>
 <div aria-hidden="true" hidden=""><label>Website<input autocomplete="off" name="website" tabindex="-1"/></label></div><button class="primary" style="width:100%;margin-top:14px" type="submit">Enviar solicitud por Email y WhatsApp →</button>
 </div>

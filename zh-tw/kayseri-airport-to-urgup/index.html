@@ -72,10 +72,10 @@
 <form class="booking-card quick-form">
 <h2>預訂機場接送</h2><div class="hint">只需幾個簡單步驟即可提交預訂資訊。</div>
 <div class="fields">
-<div class="field full"><label>接送方向</label><select name="direction"><option value="from_airport">從開塞利機場前往卡帕多奇亞</option><option value="to_airport">從卡帕多奇亞前往開塞利機場</option></select></div>
-<div class="field full"><label>目的地</label><select name="destination" required=""><option value="">選擇目的地</option><option value="Göreme">Göreme</option><option selected="" value="Ürgüp">Ürgüp</option><option value="Uçhisar">Uçhisar</option><option value="Avanos">Avanos</option><option value="Çavuşin">Çavuşin</option><option value="Ortahisar">Ortahisar</option></select></div>
-<div class="field"><label>接送日期</label><input name="date" required="" type="date"/></div>
-<div class="field"><label>乘客人數</label><input max="16" min="1" name="passengers" required="" type="number" value="1"/></div>
+<div class="field full"><label for="quick-direction">接送方向</label><select id="quick-direction" name="direction"><option value="from_airport">從開塞利機場前往卡帕多奇亞</option><option value="to_airport">從卡帕多奇亞前往開塞利機場</option></select></div>
+<div class="field full"><label for="quick-destination">目的地</label><select id="quick-destination" name="destination" required=""><option value="">選擇目的地</option><option value="Göreme">Göreme</option><option selected="" value="Ürgüp">Ürgüp</option><option value="Uçhisar">Uçhisar</option><option value="Avanos">Avanos</option><option value="Çavuşin">Çavuşin</option><option value="Ortahisar">Ortahisar</option></select></div>
+<div class="field"><label for="quick-date">接送日期</label><input id="quick-date" name="date" required="" type="date"/></div>
+<div class="field"><label for="quick-passengers">乘客人數</label><input id="quick-passengers" max="16" min="1" name="passengers" required="" type="number" value="1"/></div>
 <button class="primary field full" type="submit">查看接送選項 →</button>
 </div><div class="form-note">航班號、飯店和乘客資訊將在預訂頁面填寫。</div>
 </form>
